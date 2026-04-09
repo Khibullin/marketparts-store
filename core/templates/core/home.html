@@ -1,11 +1,178 @@
-<!doctype html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Market Parts Store</title>
-</head>
-<body>
-  <h1>Market Parts Store работает 🚀</h1>
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Market Parts — Магазин запчастей{% endblock %}
+
+{% block content %}
+<header class="topbar">
+  <div class="container topbar-inner">
+    <a class="brand" href="/">
+      <img src="{% static 'images/logo.jpg' %}" alt="Market Parts">
+      <div class="brand-title">Market <span>Parts</span></div>
+    </a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-card">
+      <h1>Магазин запчастей</h1>
+      <p>Поиск по марке, модели и артикулу. Связь напрямую с продавцом.</p>
+
+      <div class="search-box">
+        <input type="text" placeholder="Например: Hyundai Tucson, свеча, D20T0120700">
+        <button type="button">🔍</button>
+      </div>
+
+      <div class="hint">
+        Покупатель выбирает товар и пишет продавцу напрямую. Продавец размещает товар и получает сообщения в WhatsApp.
+      </div>
+
+      <div class="btn-row">
+        <a class="btn white" href="#">Найти запчасть</a>
+        <a class="btn darkred" href="https://marketparts.kz" target="_blank" rel="noopener noreferrer">Оставить заявку</a>
+      </div>
+
+      <div class="hero-note">
+        Удобный поиск по марке, модели и артикулу. Только реальные продавцы и реальные товары.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>Популярные категории</h2>
+    <div class="categories">
+      <div class="cat">Двигатель</div>
+      <div class="cat">Подвеска</div>
+      <div class="cat">Кузов</div>
+      <div class="cat">Тормоза</div>
+      <div class="cat">Электрика</div>
+      <div class="cat">Трансмиссия</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>Популярные марки</h2>
+    <div class="chips">
+      <div class="chip">Toyota</div>
+      <div class="chip">Hyundai</div>
+      <div class="chip">Kia</div>
+      <div class="chip">Lexus</div>
+      <div class="chip">BMW</div>
+      <div class="chip">Mercedes</div>
+      <div class="chip">Nissan</div>
+      <div class="chip">Chevrolet</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>Новые объявления</h2>
+    <div class="products">
+      <article class="product">
+        <img src="{% static 'images/product1.jpg' %}" alt="Свеча зажигания AG Parts">
+        <div class="product-body">
+          <div class="product-title">Свеча зажигания AG Parts</div>
+          <div class="product-article">Артикул: D20T0120700</div>
+          <div class="product-seller">AG Parts Store</div>
+          <div class="product-price">12 000 ₸</div>
+          <a class="btn-green" href="#">Написать продавцу</a>
+        </div>
+      </article>
+
+      <article class="product">
+        <img src="{% static 'images/product2.jpg' %}" alt="Свеча зажигания AG Parts 1 шт">
+        <div class="product-body">
+          <div class="product-title">Свеча зажигания AG Parts, 1 шт</div>
+          <div class="product-article">Артикул: D20T0120700</div>
+          <div class="product-seller">AG Parts Store</div>
+          <div class="product-price">3 500 ₸</div>
+          <a class="btn-green" href="#">Написать продавцу</a>
+        </div>
+      </article>
+
+      <article class="product">
+        <img src="{% static 'images/product3.jpg' %}" alt="Свечи зажигания комплект">
+        <div class="product-body">
+          <div class="product-title">Свечи зажигания комплект</div>
+          <div class="product-article">Артикул: D20T0120700</div>
+          <div class="product-seller">AG Parts Store</div>
+          <div class="product-price">13 900 ₸</div>
+          <a class="btn-green" href="#">Написать продавцу</a>
+        </div>
+      </article>
+
+      <article class="product">
+        <img src="{% static 'images/product4.jpg' %}" alt="Свечи зажигания комплект 4 шт">
+        <div class="product-body">
+          <div class="product-title">Свечи зажигания комплект 4 шт</div>
+          <div class="product-article">Артикул: D20T0120700</div>
+          <div class="product-seller">AG Parts Store</div>
+          <div class="product-price">15 500 ₸</div>
+          <a class="btn-green" href="#">Написать продавцу</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>Как это работает</h2>
+    <div class="steps">
+      <div class="step">
+        <strong>1. Найдите запчасть</strong>
+        <span>Поиск по марке, модели или артикулу без лишнего мусора.</span>
+      </div>
+      <div class="step">
+        <strong>2. Откройте товар</strong>
+        <span>Посмотрите фото, цену, артикул и описание.</span>
+      </div>
+      <div class="step">
+        <strong>3. Напишите продавцу в WhatsApp</strong>
+        <span>Согласуйте наличие, совместимость, доставку и покупку напрямую.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="accent">
+      <h3>Не нашли нужную запчасть?</h3>
+      <p>Оставьте заявку на marketparts.kz — продавцы сами предложат варианты.</p>
+      <a class="btn darkred single-btn" href="https://marketparts.kz" target="_blank" rel="noopener noreferrer">Оставить заявку</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="seller-block">
+      <h2>Продаёте запчасти?</h2>
+      <p>Размещайте товары и получайте сообщения от покупателей напрямую.</p>
+      <div class="seller-actions">
+        <a class="btn outline" href="#">Войти продавцу</a>
+        <a class="btn red" href="#">Разместить товар</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-inner">
+    <div class="footer-links">
+      <a href="#">О проекте</a>
+      <a href="#">Для продавцов</a>
+      <a href="#">Контакты</a>
+      <a href="https://marketparts.kz" target="_blank" rel="noopener noreferrer">Заявки marketparts.kz</a>
+    </div>
+    <div>© Market Parts</div>
+  </div>
+</footer>
+{% endblock %}
