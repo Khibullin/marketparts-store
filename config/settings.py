@@ -10,7 +10,7 @@ DEBUG = os.getenv("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = os.getenv(
     "ALLOWED_HOSTS",
-    "marketparts-store.kz,www.marketparts-store.kz,marketparts-store.onrender.com"
+    "marketparts-store.kz,www.marketparts-store.kz,marketparts-store-1.onrender.com"
 ).split(",")
 
 INSTALLED_APPS = [
@@ -62,8 +62,12 @@ DATABASES = {
     )
 }
 
+AUTH_PASSWORD_VALIDATORS = []
+
 LANGUAGE_CODE = 'ru'
+
 TIME_ZONE = 'Asia/Almaty'
+
 USE_I18N = True
 USE_TZ = True
 
