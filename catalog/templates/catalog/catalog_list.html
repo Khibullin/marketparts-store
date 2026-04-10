@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Каталог — Market Parts{% endblock %}
+
+{% block content %}
+<header class="topbar">
+  <div class="container topbar-inner">
+    <a class="brand" href="/">
+      <img src="{% static 'images/logo.jpg' %}" alt="Market Parts">
+      <div class="brand-title">Market <span>Parts</span></div>
+    </a>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <h2>Каталог запчастей</h2>
+
+    {% if products %}
+      <div class="products">
+        {% for product in products %}
+          <article class="product">
+            <a href="{% url 'product_detail' product.pk %}">
+              <img src="{% static 'images/product1.jpg' %}" alt="{{ product.title }}">
+            </a>
+
+            <div class="product-body">
+              <a href="{% url 'product_detail' product.pk %}">
+                <div class="product-title">{{ product.title }}</div>
+              </a>
+
+              <div class="product-article">Артикул: {{ product.article }}</div>
+              <div class="product-seller">{{ product.seller_name }}</div>
+              <div class="product-price">{{ product.price }} ₸</div>
+
+              <a
+                class="btn-green"
+                href="https://wa.me/{{ product.whatsapp_number }}?text=Здравствуйте!%20Интересует%20товар:%20{{ product.title|urlencode }}.%20Артикул:%20{{ product.article|urlencode }}"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Написать продавцу
+              </a>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="accent">
+        <h3>Пока товаров нет</h3>
+        <p>Следующий шаг — добавить тестовые товары через админку и проверить каталог.</p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

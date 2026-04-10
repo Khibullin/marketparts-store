@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ product.title }} — Market Parts{% endblock %}
+
+{% block content %}
+<header class="topbar">
+  <div class="container topbar-inner">
+    <a class="brand" href="/">
+      <img src="{% static 'images/logo.jpg' %}" alt="Market Parts">
+      <div class="brand-title">Market <span>Parts</span></div>
+    </a>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <div class="breadcrumbs">
+      <a href="/">Главная</a>
+      <span> / </span>
+      <a href="{% url 'catalog_list' %}">Каталог</a>
+      <span> / </span>
+      <span>{{ product.title }}</span>
+    </div>
+
+    <div class="product-detail">
+      <div class="product-gallery">
+        <div class="product-main-image">
+          <img src="{% static 'images/product1.jpg' %}" alt="{{ product.title }}">
+        </div>
+
+        <div class="product-thumbs">
+          <img src="{% static 'images/product1.jpg' %}" alt="{{ product.title }}">
+          <img src="{% static 'images/product2.jpg' %}" alt="{{ product.title }}">
+          <img src="{% static 'images/product3.jpg' %}" alt="{{ product.title }}">
+          <img src="{% static 'images/product4.jpg' %}" alt="{{ product.title }}">
+        </div>
+      </div>
+
+      <div class="product-info-card">
+        <div class="product-badges">
+          <span class="badge">{{ product.get_condition_display }}</span>
+          {% if product.category %}
+            <span class="badge muted">{{ product.category.name }}</span>
+          {% endif %}
+        </div>
+
+        <h1 class="product-detail-title">{{ product.title }}</h1>
+
+        <div class="detail-article">Артикул: {{ product.article }}</div>
+
+        <div class="detail-price">{{ product.price }} ₸</div>
+
+        <div class="detail-grid">
+          {% if product.brand %}
+            <div class="detail-box">
+              <div class="detail-label">Марка</div>
+              <div class="detail-value">{{ product.brand.name }}</div>
+            </div>
+          {% endif %}
+
+          {% if product.car_model %}
+            <div class="detail-box">
+              <div class="detail-label">Модель</div>
+              <div class="detail-value">{{ product.car_model.name }}</div>
+            </div>
+          {% endif %}
+
+          <div class="detail-box">
+            <div class="detail-label">Продавец</div>
+            <div class="detail-value">{{ product.seller_name }}</div>
+          </div>
+
+          <div class="detail-box">
+            <div class="detail-label">WhatsApp</div>
+            <div class="detail-value">{{ product.whatsapp_number }}</div>
+          </div>
+        </div>
+
+        <a
+          class="btn-green detail-wa-btn"
+          href="https://wa.me/{{ product.whatsapp_number }}?text=Здравствуйте!%20Интересует%20товар:%20{{ product.title|urlencode }}.%20Артикул:%20{{ product.article|urlencode }}"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Написать в WhatsApp
+        </a>
+      </div>
+    </div>
+
+    {% if product.compatibility %}
+      <div class="detail-section-card">
+        <h2>Подходит для</h2>
+        <p>{{ product.compatibility }}</p>
+      </div>
+    {% endif %}
+
+    {% if product.description %}
+      <div class="detail-section-card">
+        <h2>Описание</h2>
+        <p>{{ product.description }}</p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
