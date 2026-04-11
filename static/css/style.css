@@ -144,7 +144,7 @@ a {
 }
 
 .btn {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   min-height: 48px;
@@ -153,6 +153,8 @@ a {
   font-weight: 700;
   font-size: 16px;
   text-align: center;
+  border: none;
+  cursor: pointer;
 }
 
 .btn.white {
@@ -374,6 +376,50 @@ footer {
   gap: 8px;
 }
 
+/* Фильтры каталога */
+.catalog-filter-form {
+  display: grid;
+  gap: 14px;
+}
+
+.filter-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.filter-field {
+  display: grid;
+  gap: 6px;
+}
+
+.filter-field label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #333;
+}
+
+.filter-field input,
+.filter-field select {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 12px;
+  border: 1px solid #dcdcdc;
+  border-radius: 12px;
+  font-size: 15px;
+  background: #fff;
+  outline: none;
+}
+
+.filter-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filter-actions .btn {
+  min-width: 140px;
+}
+
 /* Карточка товара */
 .breadcrumbs {
   font-size: 14px;
@@ -576,6 +622,14 @@ footer {
     max-width: 480px;
     height: 320px;
   }
+
+  .filter-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .filter-search {
+    grid-column: span 2;
+  }
 }
 
 @media (min-width: 1100px) {
@@ -590,5 +644,14 @@ footer {
   .product-main-image img {
     max-width: 520px;
     height: 360px;
+  }
+
+  .filter-grid {
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    align-items: end;
+  }
+
+  .filter-search {
+    grid-column: span 1;
   }
 }
