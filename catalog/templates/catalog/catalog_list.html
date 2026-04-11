@@ -36,7 +36,7 @@
             <select id="country" name="country">
               <option value="">Все страны</option>
               {% for country in countries %}
-                <option value="{{ country.id }}" {% if selected_country == country.id|stringformat:"s" %}selected{% endif %}>
+                <option value="{{ country.id }}" {% if selected_country == country.id|slugify %}selected{% endif %}>
                   {{ country.name }}
                 </option>
               {% endfor %}
@@ -48,7 +48,7 @@
             <select id="brand" name="brand">
               <option value="">Все марки</option>
               {% for brand in brands %}
-                <option value="{{ brand.id }}" {% if selected_brand == brand.id|stringformat:"s" %}selected{% endif %}>
+                <option value="{{ brand.id }}" {% if selected_brand == brand.id|slugify %}selected{% endif %}>
                   {{ brand.name }}
                 </option>
               {% endfor %}
@@ -60,7 +60,7 @@
             <select id="model" name="model">
               <option value="">Все модели</option>
               {% for model in models %}
-                <option value="{{ model.id }}" {% if selected_model == model.id|stringformat:"s" %}selected{% endif %}>
+                <option value="{{ model.id }}" {% if selected_model == model.id|slugify %}selected{% endif %}>
                   {{ model.name }}
                 </option>
               {% endfor %}
@@ -72,7 +72,7 @@
             <select id="category" name="category">
               <option value="">Все категории</option>
               {% for category in categories %}
-                <option value="{{ category.id }}" {% if selected_category == category.id|stringformat:"s" %}selected{% endif %}>
+                <option value="{{ category.id }}" {% if selected_category == category.id|slugify %}selected{% endif %}>
                   {{ category.name }}
                 </option>
               {% endfor %}

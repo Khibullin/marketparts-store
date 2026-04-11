@@ -11,6 +11,34 @@ def catalog_list(request):
     model_id = request.GET.get('model', '').strip()
     category_id = request.GET.get('category', '').strip()
 
+    countries = Country.objects.all().order_by('name')
+    categories = Category.objects.all().order_by('name')
+
+    # Базовые queryset для фильтров
+    brands = Brand.objects.select_related('country').all().order_by('name')
+    models = CarModel.objects.select_related('brand', 'brand__country').all().order_by('name')
+
+    # Сужаем марки по стране
+    if country_id:
+        brands = brands.filter(country_id=country_id)
+
+        # Если выбрана марка не из этой страны — сбрасываем её
+        if brand_id and not brands.filter(id=brand_id).exists():
+            brand_id = ''
+            model_id = ''
+
+    # Сужаем модели по марке
+    if brand_id:
+        models = models.filter(brand_id=brand_id)
+
+        # Если выбрана модель не из этой марки — сбрасываем её
+        if model_id and not models.filter(id=model_id).exists():
+            model_id = ''
+    else:
+        # Если марка не выбрана, но страна выбрана — модели не показываем все подряд
+        if country_id:
+            models = models.none()
+
     products = Product.objects.filter(is_published=True).select_related(
         'brand',
         'brand__country',
@@ -37,17 +65,6 @@ def catalog_list(request):
 
     if category_id:
         products = products.filter(category_id=category_id)
-
-    countries = Country.objects.all().order_by('name')
-    brands = Brand.objects.all().select_related('country').order_by('name')
-    models = CarModel.objects.all().select_related('brand').order_by('name')
-    categories = Category.objects.all().order_by('name')
-
-    if country_id:
-        brands = brands.filter(country_id=country_id)
-
-    if brand_id:
-        models = models.filter(brand_id=brand_id)
 
     context = {
         'products': products,

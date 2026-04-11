@@ -3,99 +3,47 @@ from catalog.models import Brand, CarModel, Category, Product
 
 
 class Command(BaseCommand):
-    help = 'Заполнение тестовыми товарами'
+    help = 'Заполнение тестовыми товарами (много товаров)'
 
     def handle(self, *args, **kwargs):
         Product.objects.all().delete()
 
-        hyundai = Brand.objects.get(name='Hyundai')
-        kia = Brand.objects.get(name='Kia')
-        toyota = Brand.objects.get(name='Toyota')
-        bmw = Brand.objects.get(name='BMW')
+        categories = list(Category.objects.all())
+        models = list(CarModel.objects.select_related('brand'))
 
-        tucson = CarModel.objects.get(name='Tucson', brand=hyundai)
-        sportage = CarModel.objects.get(name='Sportage', brand=kia)
-        camry = CarModel.objects.get(name='Camry', brand=toyota)
-        x5 = CarModel.objects.get(name='X5', brand=bmw)
+        sellers = [
+            ('AG Parts', '77771234567'),
+            ('Korea Parts', '77775554433'),
+            ('Japan Parts', '77779998877'),
+            ('Euro Parts', '77770001122'),
+        ]
 
-        engine = Category.objects.get(name='Двигатель')
-        suspension = Category.objects.get(name='Подвеска')
-        brakes = Category.objects.get(name='Тормоза')
-        filters = Category.objects.get(name='Фильтры')
+        articles = 1000
+        count = 0
 
-        Product.objects.create(
-            title='Свеча зажигания AG Parts',
-            article='D20T0120700',
-            price=12000,
-            condition='new',
-            brand=hyundai,
-            car_model=tucson,
-            category=engine,
-            seller_name='AG Parts Store',
-            whatsapp_number='77771234567',
-            compatibility='Hyundai Tucson, Kia Sportage',
-            description='Оригинальная свеча зажигания, новая, в наличии.',
-            is_published=True,
-        )
+        for model in models:
+            brand = model.brand
 
-        Product.objects.create(
-            title='Свечи комплект 4 шт',
-            article='D20T0120700-K4',
-            price=15500,
-            condition='new',
-            brand=hyundai,
-            car_model=tucson,
-            category=engine,
-            seller_name='AG Parts Store',
-            whatsapp_number='77771234567',
-            compatibility='Hyundai Tucson, Kia Sportage',
-            description='Комплект свечей зажигания 4 шт.',
-            is_published=True,
-        )
+            for category in categories:
+                for i in range(2):  # по 2 товара на комбинацию
+                    seller_name, phone = sellers[count % len(sellers)]
 
-        Product.objects.create(
-            title='Амортизатор передний',
-            article='AMR-12345',
-            price=25000,
-            condition='used',
-            brand=toyota,
-            car_model=camry,
-            category=suspension,
-            seller_name='Japan Parts',
-            whatsapp_number='77775554433',
-            compatibility='Toyota Camry 40, Toyota Camry 50',
-            description='Передний амортизатор, хорошее состояние.',
-            is_published=True,
-        )
+                    Product.objects.create(
+                        title=f'{category.name} для {brand.name} {model.name}',
+                        article=f'ART-{articles}',
+                        price=5000 + (count * 700),
+                        condition='new' if count % 2 == 0 else 'used',
+                        brand=brand,
+                        car_model=model,
+                        category=category,
+                        seller_name=seller_name,
+                        whatsapp_number=phone,
+                        compatibility=f'{brand.name} {model.name}',
+                        description=f'{category.name} для автомобиля {brand.name} {model.name}',
+                        is_published=True,
+                    )
 
-        Product.objects.create(
-            title='Тормозные колодки',
-            article='BRK-67890',
-            price=8000,
-            condition='new',
-            brand=kia,
-            car_model=sportage,
-            category=brakes,
-            seller_name='Korea Parts',
-            whatsapp_number='77779998877',
-            compatibility='Kia Sportage, Hyundai Tucson',
-            description='Новые тормозные колодки, комплект.',
-            is_published=True,
-        )
+                    articles += 1
+                    count += 1
 
-        Product.objects.create(
-            title='Масляный фильтр',
-            article='FLT-10001',
-            price=4500,
-            condition='new',
-            brand=bmw,
-            car_model=x5,
-            category=filters,
-            seller_name='Euro Parts',
-            whatsapp_number='77770001122',
-            compatibility='BMW X5, BMW X6',
-            description='Масляный фильтр, новый.',
-            is_published=True,
-        )
-
-        self.stdout.write(self.style.SUCCESS('Тестовые товары успешно загружены!'))
+        self.stdout.write(self.style.SUCCESS(f'Создано товаров: {count}'))
