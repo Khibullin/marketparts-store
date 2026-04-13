@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ page_title }} — Market Parts{% endblock %}
+
+{% block content %}
+<header class="topbar">
+  <div class="container topbar-inner">
+    <a class="brand" href="/">
+      <img src="{% static 'images/logo.jpg' %}" alt="Market Parts">
+      <div class="brand-title">Market <span>Parts</span></div>
+    </a>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <div class="seller-page-card">
+      <h2>{{ page_title }}</h2>
+      <p class="dashboard-subtitle">{{ seller.name }}</p>
+
+      <form method="post" enctype="multipart/form-data" class="seller-form">
+        {% csrf_token %}
+
+        <p>
+          <label>Страна</label>
+          <select id="id_country" name="country">
+            <option value="">Выберите страну</option>
+            {% for c in form.fields.country.queryset %}
+              <option value="{{ c.id }}" {% if form.country.value|stringformat:"s" == c.id|stringformat:"s" %}selected{% endif %}>
+                {{ c.name }}
+              </option>
+            {% endfor %}
+          </select>
+        </p>
+
+        <p>
+          <label>Марка</label>
+          {{ form.brand }}
+        </p>
+
+        <p>
+          <label>Модель</label>
+          {{ form.car_model }}
+        </p>
+
+        <p>
+          <label for="{{ form.category.id_for_label }}">{{ form.category.label }}</label>
+          {{ form.category }}
+        </p>
+
+        <p>
+          <label for="{{ form.title.id_for_label }}">{{ form.title.label }}</label>
+          {{ form.title }}
+        </p>
+
+        <p>
+          <label for="{{ form.article.id_for_label }}">{{ form.article.label }}</label>
+          {{ form.article }}
+        </p>
+
+        <p>
+          <label for="{{ form.price.id_for_label }}">{{ form.price.label }}</label>
+          {{ form.price }}
+        </p>
+
+        <p>
+          <label for="{{ form.condition.id_for_label }}">{{ form.condition.label }}</label>
+          {{ form.condition }}
+        </p>
+
+        <p>
+          <label for="{{ form.status.id_for_label }}">{{ form.status.label }}</label>
+          {{ form.status }}
+        </p>
+
+        {% if product and product.main_image %}
+          <div class="current-image-box">
+            <div class="detail-label">Текущее главное фото</div>
+            <img src="{{ product.main_image.url }}" alt="{{ product.title }}">
+          </div>
+        {% endif %}
+
+        <p>
+          <label for="{{ form.main_image.id_for_label }}">{{ form.main_image.label }}</label>
+          {{ form.main_image }}
+        </p>
+
+        <p>
+          <label for="id_extra_images">Дополнительные фото (до 4)</label>
+          <input type="file" id="id_extra_images" name="extra_images" multiple>
+        </p>
+
+        {% if product and product.images.all %}
+          <div class="current-image-box">
+            <div class="detail-label">Текущие дополнительные фото</div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
+              {% for img in product.images.all %}
+                <img src="{{ img.image.url }}" alt="{{ product.title }}" style="width:120px; height:90px; object-fit:contain;">
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+
+        <p>
+          <label for="{{ form.compatibility.id_for_label }}">{{ form.compatibility.label }}</label>
+          {{ form.compatibility }}
+        </p>
+
+        <p>
+          <label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+          {{ form.description }}
+        </p>
+
+        <div class="form-action-row">
+          <button type="submit" class="btn red">{{ submit_text }}</button>
+          <a href="{% url 'seller_dashboard' %}" class="btn outline">Назад</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+document.getElementById("id_country").addEventListener("change", function() {
+    let countryId = this.value;
+
+    fetch(`/catalog/ajax/load-brands/?country=${countryId}`)
+        .then(response => response.json())
+        .then(data => {
+            let brandSelect = document.getElementById("id_brand");
+            brandSelect.innerHTML = '<option value="">Выберите марку</option>';
+
+            data.forEach(item => {
+                brandSelect.innerHTML += `<option value="${item.id}">${item.name}</option>`;
+            });
+
+            document.getElementById("id_car_model").innerHTML =
+                '<option value="">Сначала выберите марку</option>';
+        });
+});
+
+document.getElementById("id_brand").addEventListener("change", function() {
+    let brandId = this.value;
+
+    fetch(`/catalog/ajax/load-models/?brand=${brandId}`)
+        .then(response => response.json())
+        .then(data => {
+            let modelSelect = document.getElementById("id_car_model");
+            modelSelect.innerHTML = '<option value="">Выберите модель</option>';
+
+            data.forEach(item => {
+                modelSelect.innerHTML += `<option value="${item.id}">${item.name}</option>`;
+            });
+        });
+});
+</script>
+{% endblock %}

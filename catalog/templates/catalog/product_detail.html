@@ -26,20 +26,30 @@
     <div class="product-detail">
       <div class="product-gallery">
         <div class="product-main-image">
-          <img src="{% static 'images/product1.jpg' %}" alt="{{ product.title }}">
+          {% if product.main_image %}
+            <img src="{{ product.main_image.url }}" alt="{{ product.title }}" id="mainImage">
+          {% else %}
+            <img src="{% static 'images/product1.jpg' %}" alt="{{ product.title }}" id="mainImage">
+          {% endif %}
         </div>
 
         <div class="product-thumbs">
-          <img src="{% static 'images/product1.jpg' %}" alt="{{ product.title }}">
-          <img src="{% static 'images/product2.jpg' %}" alt="{{ product.title }}">
-          <img src="{% static 'images/product3.jpg' %}" alt="{{ product.title }}">
-          <img src="{% static 'images/product4.jpg' %}" alt="{{ product.title }}">
+          {% if product.main_image %}
+            <img src="{{ product.main_image.url }}" alt="{{ product.title }}" onclick="changeImage(this)">
+          {% else %}
+            <img src="{% static 'images/product1.jpg' %}" alt="{{ product.title }}" onclick="changeImage(this)">
+          {% endif %}
+
+          {% for img in product.images.all %}
+            <img src="{{ img.image.url }}" alt="{{ product.title }}" onclick="changeImage(this)">
+          {% endfor %}
         </div>
       </div>
 
       <div class="product-info-card">
         <div class="product-badges">
           <span class="badge">{{ product.get_condition_display }}</span>
+          <span class="badge muted">{{ product.get_status_display }}</span>
           {% if product.category %}
             <span class="badge muted">{{ product.category.name }}</span>
           {% endif %}
@@ -101,6 +111,23 @@
         <p>{{ product.description }}</p>
       </div>
     {% endif %}
+
+    <div class="detail-section-card">
+      <h2>Не подходит или не нашли нужный вариант?</h2>
+      <p>
+        Можно перейти на отдельный сайт заявок Market Parts и отправить запрос продавцам. Это другой сервис, работающий независимо от магазина.
+      </p>
+      <div class="form-action-row">
+        <a class="btn darkred" href="https://marketparts.kz" target="_blank" rel="noopener noreferrer">Перейти на сайт заявок</a>
+        <a class="btn outline" href="{% url 'catalog_list' %}">Назад в каталог</a>
+      </div>
+    </div>
   </div>
 </section>
+
+<script>
+function changeImage(el) {
+    document.getElementById('mainImage').src = el.src;
+}
+</script>
 {% endblock %}

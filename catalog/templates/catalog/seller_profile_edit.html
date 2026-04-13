@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Редактировать профиль — Market Parts{% endblock %}
+
+{% block content %}
+<header class="topbar">
+  <div class="container topbar-inner">
+    <a class="brand" href="/">
+      <img src="{% static 'images/logo.jpg' %}" alt="Market Parts">
+      <div class="brand-title">Market <span>Parts</span></div>
+    </a>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <div class="seller-page-card">
+      <h2>Редактировать профиль</h2>
+      <p class="dashboard-subtitle">{{ seller.user.username }}</p>
+
+      <form method="post" class="seller-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <div class="form-action-row">
+          <button type="submit" class="btn red">Сохранить изменения</button>
+          <a href="{% url 'seller_profile' %}" class="btn outline">Назад</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

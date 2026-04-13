@@ -92,7 +92,11 @@
         {% for product in products %}
           <article class="product">
             <a href="{% url 'product_detail' product.pk %}">
-              <img src="{% static 'images/product1.jpg' %}" alt="{{ product.title }}">
+              {% if product.main_image %}
+                <img src="{{ product.main_image.url }}" alt="{{ product.title }}">
+              {% else %}
+                <img src="{% static 'images/product1.jpg' %}" alt="{{ product.title }}">
+              {% endif %}
             </a>
 
             <div class="product-body">
@@ -124,10 +128,34 @@
           </article>
         {% endfor %}
       </div>
+
+      <div class="catalog-bridge-note">
+        <div class="bridge-block">
+          <div class="bridge-text">
+            <h3>Не нашли нужный вариант среди товаров?</h3>
+            <p>
+              Оставьте заявку на отдельном сайте заявок Market Parts. Это другой сервис, где продавцы сами могут предложить нужную запчасть.
+            </p>
+          </div>
+          <div class="bridge-actions">
+            <a class="btn darkred" href="https://marketparts.kz" target="_blank" rel="noopener noreferrer">Оставить заявку на marketparts.kz</a>
+          </div>
+        </div>
+      </div>
     {% else %}
-      <div class="accent">
-        <h3>Ничего не найдено</h3>
-        <p>Попробуй изменить параметры поиска или сбросить фильтры.</p>
+      <div class="bridge-empty">
+        <div class="bridge-block">
+          <div class="bridge-text">
+            <h3>Ничего не найдено в каталоге</h3>
+            <p>
+              Попробуй изменить параметры поиска. Если нужной запчасти всё равно нет — перейди на отдельный сайт заявок и отправь запрос продавцам.
+            </p>
+          </div>
+          <div class="bridge-actions">
+            <a class="btn darkred" href="https://marketparts.kz" target="_blank" rel="noopener noreferrer">Перейти на сайт заявок</a>
+            <a href="{% url 'catalog_list' %}" class="btn outline">Сбросить фильтры</a>
+          </div>
+        </div>
       </div>
     {% endif %}
   </div>

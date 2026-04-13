@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Country, Brand, CarModel, Category, Product
+from .models import Country, Brand, CarModel, Category, Product, SellerProfile, ProductImage
 
 
 @admin.register(Country)
@@ -32,6 +32,18 @@ class CategoryAdmin(admin.ModelAdmin):
     search_fields = ('name',)
 
 
+@admin.register(SellerProfile)
+class SellerProfileAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'phone', 'user')
+    search_fields = ('name', 'phone', 'user__username')
+
+
+@admin.register(ProductImage)
+class ProductImageAdmin(admin.ModelAdmin):
+    list_display = ('id', 'product', 'image')
+    search_fields = ('product__title', 'product__article')
+
+
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = (
@@ -44,8 +56,8 @@ class ProductAdmin(admin.ModelAdmin):
         'car_model',
         'category',
         'condition',
-        'is_published',
+        'status',
         'created_at',
     )
-    list_filter = ('is_published', 'condition', 'brand__country', 'brand', 'category')
+    list_filter = ('status', 'condition', 'brand__country', 'brand', 'category')
     search_fields = ('title', 'article', 'seller_name', 'description', 'compatibility')

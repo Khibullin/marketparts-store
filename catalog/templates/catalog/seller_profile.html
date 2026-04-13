@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Профиль продавца — Market Parts{% endblock %}
+
+{% block content %}
+<header class="topbar">
+  <div class="container topbar-inner">
+    <a class="brand" href="/">
+      <img src="{% static 'images/logo.jpg' %}" alt="Market Parts">
+      <div class="brand-title">Market <span>Parts</span></div>
+    </a>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <div class="seller-page-card">
+      <h2>Профиль продавца</h2>
+
+      <div class="detail-grid">
+        <div class="detail-box">
+          <div class="detail-label">Название магазина</div>
+          <div class="detail-value">{{ seller.name }}</div>
+        </div>
+
+        <div class="detail-box">
+          <div class="detail-label">Телефон / WhatsApp</div>
+          <div class="detail-value">{{ seller.phone }}</div>
+        </div>
+
+        <div class="detail-box">
+          <div class="detail-label">Логин</div>
+          <div class="detail-value">{{ seller.user.username }}</div>
+        </div>
+
+        <div class="detail-box">
+          <div class="detail-label">Товаров в кабинете</div>
+          <div class="detail-value">{{ products_count }}</div>
+        </div>
+      </div>
+
+      <div class="form-action-row" style="margin-top:16px;">
+        <a href="{% url 'seller_profile_edit' %}" class="btn red">Редактировать профиль</a>
+        <a href="{% url 'seller_profile_delete' %}" class="btn danger">Удалить профиль</a>
+        <a href="{% url 'seller_dashboard' %}" class="btn outline">Назад</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

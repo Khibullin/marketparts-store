@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Кабинет продавца — Market Parts{% endblock %}
+
+{% block content %}
+<header class="topbar">
+  <div class="container topbar-inner">
+    <a class="brand" href="/">
+      <img src="{% static 'images/logo.jpg' %}" alt="Market Parts">
+      <div class="brand-title">Market <span>Parts</span></div>
+    </a>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <div class="dashboard-header">
+      <div>
+        <h2>Кабинет продавца</h2>
+        <p class="dashboard-subtitle">{{ seller.name }} · {{ seller.phone }}</p>
+      </div>
+
+      <div class="dashboard-actions">
+        <a href="{% url 'seller_profile' %}" class="btn outline">Профиль</a>
+        <a href="{% url 'add_product' %}" class="btn red">Добавить товар</a>
+        <a href="{% url 'seller_logout' %}" class="btn outline">Выйти</a>
+      </div>
+    </div>
+
+    {% if products %}
+      <div class="products">
+        {% for product in products %}
+          <article class="product">
+            <a href="{% url 'product_detail' product.pk %}">
+              {% if product.main_image %}
+                <img src="{{ product.main_image.url }}" alt="{{ product.title }}">
+              {% else %}
+                <img src="{% static 'images/product1.jpg' %}" alt="{{ product.title }}">
+              {% endif %}
+            </a>
+
+            <div class="product-body">
+              <a href="{% url 'product_detail' product.pk %}">
+                <div class="product-title">{{ product.title }}</div>
+              </a>
+
+              <div class="product-article">Артикул: {{ product.article }}</div>
+              <div class="product-price">{{ product.price }} ₸</div>
+              <div class="product-seller">
+                {{ product.get_condition_display }} · {{ product.get_status_display }}
+              </div>
+
+              <div class="dashboard-card-actions">
+                <a href="{% url 'edit_product' product.pk %}" class="btn outline small-btn">Редактировать</a>
+                <a href="{% url 'delete_product' product.pk %}" class="btn danger small-btn">Удалить</a>
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="accent">
+        <h3>Пока товаров нет</h3>
+        <p>Добавь первый товар в свой каталог.</p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

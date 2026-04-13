@@ -6,6 +6,7 @@
   --muted: #666;
   --bg: #f5f5f5;
   --line: #e8e8e8;
+  --danger: #d63b32;
 }
 
 * {
@@ -178,6 +179,17 @@ a {
   color: #fff;
 }
 
+.btn.danger {
+  background: var(--danger);
+  color: #fff;
+}
+
+.btn.small-btn {
+  min-height: 40px;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
 .hero-note {
   font-size: 14px;
   line-height: 1.4;
@@ -317,14 +329,17 @@ a {
 
 .accent,
 .seller-block,
-.detail-section-card {
+.detail-section-card,
+.seller-page-card,
+.bridge-block {
   background: #fff;
   border: 1px solid var(--line);
   border-radius: 18px;
   padding: 18px 16px;
 }
 
-.accent h3 {
+.accent h3,
+.bridge-text h3 {
   margin: 0 0 8px;
   font-size: 25px;
   line-height: 1.1;
@@ -332,7 +347,10 @@ a {
 
 .accent p,
 .seller-block p,
-.detail-section-card p {
+.detail-section-card p,
+.dashboard-subtitle,
+.form-note,
+.bridge-text p {
   margin: 0 0 14px;
   color: var(--muted);
   line-height: 1.42;
@@ -341,6 +359,21 @@ a {
 
 .detail-section-card {
   margin-top: 16px;
+}
+
+.catalog-bridge-note {
+  margin-top: 18px;
+}
+
+.bridge-empty {
+  margin-top: 8px;
+}
+
+.bridge-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
 }
 
 .single-btn {
@@ -374,6 +407,96 @@ footer {
 .footer-links {
   display: grid;
   gap: 8px;
+}
+
+/* Формы продавца */
+.seller-form {
+  display: grid;
+  gap: 12px;
+}
+
+.seller-form p {
+  margin: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.seller-form label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #333;
+}
+
+.seller-form input,
+.seller-form select,
+.seller-form textarea {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 12px;
+  border: 1px solid #dcdcdc;
+  border-radius: 12px;
+  font-size: 15px;
+  background: #fff;
+  outline: none;
+}
+
+.seller-form textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.form-error {
+  background: #fff0ee;
+  color: #b93326;
+  border: 1px solid #ffd0ca;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 14px;
+}
+
+.form-action-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.current-image-box {
+  margin: 8px 0 12px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fafafa;
+}
+
+.current-image-box img {
+  width: 100%;
+  max-width: 240px;
+  height: 180px;
+  object-fit: contain;
+  display: block;
+  margin-top: 8px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 8px;
+}
+
+.dashboard-header {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.dashboard-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.dashboard-card-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
 }
 
 /* Фильтры каталога */
@@ -629,6 +752,18 @@ footer {
 
   .filter-search {
     grid-column: span 2;
+  }
+
+  .dashboard-header {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+
+  .bridge-block {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: center;
   }
 }
 

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Регистрация продавца — Market Parts{% endblock %}
+
+{% block content %}
+<header class="topbar">
+  <div class="container topbar-inner">
+    <a class="brand" href="/">
+      <img src="{% static 'images/logo.jpg' %}" alt="Market Parts">
+      <div class="brand-title">Market <span>Parts</span></div>
+    </a>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <div class="seller-page-card">
+      <h2>Регистрация продавца</h2>
+
+      {% if error_message %}
+        <div class="form-error">{{ error_message }}</div>
+      {% endif %}
+
+      <form method="post" class="seller-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn red">Зарегистрироваться</button>
+      </form>
+
+      <p class="form-note">
+        Уже есть аккаунт?
+        <a href="{% url 'seller_login' %}">Войти</a>
+      </p>
+    </div>
+  </div>
+</section>
+{% endblock %}
