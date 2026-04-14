@@ -15,7 +15,7 @@ if DEBUG:
 else:
     ALLOWED_HOSTS = os.getenv(
         "ALLOWED_HOSTS",
-        "marketparts-store.kz,www.marketparts-store.kz,marketparts-store-1.onrender.com"
+        "marketparts-store.kz,www.marketparts-store.kz,marketparts-store.onrender.com,marketparts-store-1.onrender.com"
     ).split(",")
 
 INSTALLED_APPS = [
