@@ -86,28 +86,6 @@
 
 <section class="section">
   <div class="container">
-    <h2>Популярные категории</h2>
-    <div class="chips">
-      {% for category in categories %}
-        <a class="chip" href="/catalog/?category={{ category.id }}">{{ category.name }}</a>
-      {% endfor %}
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-    <h2>Популярные марки</h2>
-    <div class="chips">
-      {% for brand in brands %}
-        <a class="chip" href="/catalog/?brand={{ brand.id }}">{{ brand.name }}</a>
-      {% endfor %}
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
     <div class="seller-block">
       <h2>Продаёте запчасти?</h2>
       <p>Размещайте товары и получайте клиентов напрямую</p>
@@ -122,9 +100,10 @@
 <footer>
   <div class="container footer-inner">
     <div class="footer-links">
-      <a href="/catalog/seller/register/">Для продавцов</a>
+      <a href="/guide/">Гид Market Parts</a>
+      <a href="/faq/">Частые вопросы</a>
+      <a href="/contact/">Обратная связь</a>
       <a href="https://marketparts.kz" target="_blank" rel="noopener noreferrer">Сайт заявок</a>
-      <a href="/">Главная</a>
     </div>
     <div>© Market Parts</div>
   </div>
