@@ -69,14 +69,16 @@
 
       <div class="hero-secondary-search">
         <h3>Или найдите по названию или артикулу</h3>
-        <form action="/catalog/" method="get" class="search-box">
+        <form action="/catalog/" method="get" class="hero-inline-search">
           <input type="text" name="q" placeholder="Например: тормозные колодки, амортизатор, 04465-33471">
-          <button type="submit">🔍</button>
+          <button type="submit" class="btn search-text-btn">Найти</button>
         </form>
       </div>
 
-      <div class="btn-row">
-        <a class="btn darkred" href="https://marketparts.kz" target="_blank" rel="noopener noreferrer">Оставить заявку</a>
+      <div class="hero-request-block">
+        <h3>Не нашли нужную запчасть?</h3>
+        <p>Перейдите на отдельный сайт заявок и отправьте запрос продавцам</p>
+        <a class="btn darkred hero-request-btn" href="https://marketparts.kz" target="_blank" rel="noopener noreferrer">Оставить заявку</a>
       </div>
     </div>
   </div>
@@ -100,20 +102,6 @@
       {% for brand in brands %}
         <a class="chip" href="/catalog/?brand={{ brand.id }}">{{ brand.name }}</a>
       {% endfor %}
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-    <div class="bridge-block">
-      <div class="bridge-text">
-        <h3>Не нашли нужную запчасть?</h3>
-        <p>Отправьте заявку продавцам и получите предложения</p>
-      </div>
-      <div class="bridge-actions">
-        <a class="btn darkred" href="https://marketparts.kz" target="_blank" rel="noopener noreferrer">Перейти на сайт заявок</a>
-      </div>
     </div>
   </div>
 </section>
@@ -156,7 +144,6 @@ document.addEventListener("DOMContentLoaded", function () {
             modelSelect.innerHTML = '<option value="">Сначала выберите марку</option>';
 
             if (!countryId) {
-                brandSelect.innerHTML = '<option value="">Сначала выберите страну</option>';
                 return;
             }
 
