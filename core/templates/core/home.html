@@ -12,7 +12,7 @@
     </a>
 
     <div class="topbar-actions">
-      <a class="btn outline topbar-btn" href="/catalog/">Каталог</a>
+      <!-- УБРАЛИ КАТАЛОГ -->
       <a class="btn seller-login-btn topbar-btn" href="/catalog/seller/login/">Войти продавцу</a>
     </div>
   </div>
@@ -22,20 +22,16 @@
   <div class="container">
     <div class="hero-card">
       <h1>Магазин запчастей</h1>
-      <p>Поиск по марке, модели и артикулу. Связь напрямую с продавцом.</p>
+      <p>Поиск по марке, модели и названию запчасти</p>
 
       <form action="/catalog/" method="get" class="search-box">
         <input type="text" name="q" placeholder="Например: тормозные колодки на Camry 2015">
         <button type="submit">🔍</button>
       </form>
 
-      <div class="hint">
-        Ищите запчасть в каталоге. Если нужного товара нет, можно перейти на сайт заявок.
-      </div>
-
       <div class="btn-row">
-        <a class="btn white" href="/catalog/">Найти запчасть</a>
-        <a class="btn darkred" href="https://marketparts.kz" target="_blank" rel="noopener noreferrer">Оставить заявку</a>
+        <a class="btn white" href="/catalog/">Перейти в каталог</a>
+        <a class="btn darkred" href="https://marketparts.kz" target="_blank">Оставить заявку</a>
       </div>
     </div>
   </div>
@@ -47,8 +43,6 @@
     <div class="chips">
       {% for category in categories %}
         <a class="chip" href="/catalog/?category={{ category.id }}">{{ category.name }}</a>
-      {% empty %}
-        <span class="chip">Категории скоро появятся</span>
       {% endfor %}
     </div>
   </div>
@@ -60,8 +54,6 @@
     <div class="chips">
       {% for brand in brands %}
         <a class="chip" href="/catalog/?brand={{ brand.id }}">{{ brand.name }}</a>
-      {% empty %}
-        <span class="chip">Марки скоро появятся</span>
       {% endfor %}
     </div>
   </div>
@@ -72,10 +64,10 @@
     <div class="bridge-block">
       <div class="bridge-text">
         <h3>Не нашли нужную запчасть?</h3>
-        <p>Перейдите на отдельный сайт заявок Market Parts и отправьте запрос продавцам.</p>
+        <p>Отправьте заявку продавцам и получите предложения</p>
       </div>
       <div class="bridge-actions">
-        <a class="btn darkred" href="https://marketparts.kz" target="_blank" rel="noopener noreferrer">Перейти на сайт заявок</a>
+        <a class="btn darkred" href="https://marketparts.kz" target="_blank">Перейти на сайт заявок</a>
       </div>
     </div>
   </div>
@@ -85,10 +77,10 @@
   <div class="container">
     <div class="seller-block">
       <h2>Продаёте запчасти?</h2>
-      <p>Размещайте товары и получайте сообщения от покупателей напрямую.</p>
+      <p>Размещайте товары и получайте клиентов напрямую</p>
       <div class="seller-actions">
         <a class="btn seller-login-btn" href="/catalog/seller/login/">Войти продавцу</a>
-        <a class="btn red" href="/catalog/seller/register/">Зарегистрироваться</a>
+        <a class="btn red" href="/catalog/seller/register/">Регистрация</a>
       </div>
     </div>
   </div>
@@ -97,9 +89,8 @@
 <footer>
   <div class="container footer-inner">
     <div class="footer-links">
-      <a href="/catalog/">Каталог</a>
       <a href="/catalog/seller/register/">Для продавцов</a>
-      <a href="https://marketparts.kz" target="_blank" rel="noopener noreferrer">Сайт заявок</a>
+      <a href="https://marketparts.kz" target="_blank">Сайт заявок</a>
       <a href="/">Главная</a>
     </div>
     <div>© Market Parts</div>
