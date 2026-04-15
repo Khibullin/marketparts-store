@@ -1,193 +1,43 @@
 {% extends 'base.html' %}
-{% load static %}
-
-{% block title %}Market Parts — Магазин запчастей{% endblock %}
 
 {% block content %}
-<header class="topbar">
-  <div class="container topbar-inner">
-    <a class="brand" href="/">
-      <img src="{% static 'images/logo.jpg' %}" alt="Market Parts">
-      <div class="brand-title">Market <span>Parts</span></div>
-    </a>
-  </div>
-</header>
 
-<section class="hero">
-  <div class="container">
-    <div class="hero-card">
-      <h1>Магазин запчастей</h1>
-      <p>Поиск по марке, модели и артикулу. Связь напрямую с продавцом.</p>
+<div class="search-box">
+    <form method="get" action="/catalog/">
 
-      <form action="{% url 'catalog_list' %}" method="get" class="search-box">
-        <input type="text" name="q" placeholder="Например: Hyundai Tucson, свеча, D20T0120700">
-        <button type="submit">🔍</button>
-      </form>
+        <input type="text" name="q" placeholder="Например: Тормозные колодки на Camry 2015">
 
-      <div class="hint">
-        Покупатель выбирает товар и пишет продавцу напрямую. Если нужной запчасти нет в каталоге — можно сразу оставить заявку на отдельном сайте заявок.
-      </div>
+        <select name="country">
+            <option value="">Выберите страну</option>
+            {% for c in countries %}
+            <option value="{{ c.id }}">{{ c.name }}</option>
+            {% endfor %}
+        </select>
 
-      <div class="btn-row">
-        <a class="btn white" href="{% url 'catalog_list' %}">Найти запчасть</a>
-        <a class="btn darkred" href="https://marketparts.kz" target="_blank" rel="noopener noreferrer">Оставить заявку</a>
-      </div>
+        <select name="brand">
+            <option value="">Выберите марку</option>
+        </select>
 
-      <div class="hero-note">
-        Два отдельных сервиса: каталог товаров и сайт заявок. Выбирай удобный путь поиска.
-      </div>
-    </div>
-  </div>
-</section>
+        <select name="model">
+            <option value="">Выберите модель</option>
+        </select>
 
-<section class="section">
-  <div class="container">
-    <h2>Популярные категории</h2>
-    <div class="categories">
-      <div class="cat">Двигатель</div>
-      <div class="cat">Подвеска</div>
-      <div class="cat">Кузов</div>
-      <div class="cat">Тормоза</div>
-      <div class="cat">Электрика</div>
-      <div class="cat">Трансмиссия</div>
-    </div>
-  </div>
-</section>
+        <button type="submit" class="btn-login">Найти</button>
+    </form>
+</div>
 
-<section class="section">
-  <div class="container">
-    <h2>Популярные марки</h2>
-    <div class="chips">
-      <div class="chip">Toyota</div>
-      <div class="chip">Hyundai</div>
-      <div class="chip">Kia</div>
-      <div class="chip">Lexus</div>
-      <div class="chip">BMW</div>
-      <div class="chip">Mercedes</div>
-      <div class="chip">Nissan</div>
-      <div class="chip">Chevrolet</div>
-    </div>
-  </div>
-</section>
+<h3>Популярные категории</h3>
 
-<section class="section">
-  <div class="container">
-    <h2>Новые объявления</h2>
-    <div class="products">
-      <article class="product">
-        <a href="{% url 'catalog_list' %}">
-          <img src="{% static 'images/product1.jpg' %}" alt="Свеча зажигания AG Parts">
-        </a>
-        <div class="product-body">
-          <div class="product-title">Свеча зажигания AG Parts</div>
-          <div class="product-article">Артикул: D20T0120700</div>
-          <div class="product-seller">AG Parts Store</div>
-          <div class="product-price">12 000 ₸</div>
-          <a class="btn-green" href="{% url 'catalog_list' %}">Смотреть в каталоге</a>
-        </div>
-      </article>
+<a href="/catalog/?category=1" class="category-btn">Двигатель</a>
+<a href="/catalog/?category=2" class="category-btn">Ходовая</a>
+<a href="/catalog/?category=3" class="category-btn">Кузов</a>
+<a href="/catalog/?category=4" class="category-btn">Электрика</a>
 
-      <article class="product">
-        <a href="{% url 'catalog_list' %}">
-          <img src="{% static 'images/product2.jpg' %}" alt="Свеча зажигания комплект">
-        </a>
-        <div class="product-body">
-          <div class="product-title">Свечи комплект 4 шт</div>
-          <div class="product-article">Артикул: D20T0120700-K4</div>
-          <div class="product-seller">AG Parts Store</div>
-          <div class="product-price">15 500 ₸</div>
-          <a class="btn-green" href="{% url 'catalog_list' %}">Смотреть в каталоге</a>
-        </div>
-      </article>
+<h3>Популярные марки</h3>
 
-      <article class="product">
-        <a href="{% url 'catalog_list' %}">
-          <img src="{% static 'images/product3.jpg' %}" alt="Амортизатор передний">
-        </a>
-        <div class="product-body">
-          <div class="product-title">Амортизатор передний</div>
-          <div class="product-article">Артикул: AMR-12345</div>
-          <div class="product-seller">Japan Parts</div>
-          <div class="product-price">25 000 ₸</div>
-          <a class="btn-green" href="{% url 'catalog_list' %}">Смотреть в каталоге</a>
-        </div>
-      </article>
+<a href="/catalog/?brand=1" class="category-btn">Toyota</a>
+<a href="/catalog/?brand=2" class="category-btn">BMW</a>
+<a href="/catalog/?brand=3" class="category-btn">Hyundai</a>
+<a href="/catalog/?brand=4" class="category-btn">Kia</a>
 
-      <article class="product">
-        <a href="{% url 'catalog_list' %}">
-          <img src="{% static 'images/product4.jpg' %}" alt="Тормозные колодки">
-        </a>
-        <div class="product-body">
-          <div class="product-title">Тормозные колодки</div>
-          <div class="product-article">Артикул: BRK-67890</div>
-          <div class="product-seller">Korea Parts</div>
-          <div class="product-price">8 000 ₸</div>
-          <a class="btn-green" href="{% url 'catalog_list' %}">Смотреть в каталоге</a>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-    <h2>Как это работает</h2>
-    <div class="steps">
-      <div class="step">
-        <strong>1. Найдите запчасть</strong>
-        <span>Ищите по марке, модели, артикулу и категории в каталоге магазина.</span>
-      </div>
-      <div class="step">
-        <strong>2. Напишите продавцу</strong>
-        <span>Если товар найден, сразу переходите в WhatsApp и уточняйте детали напрямую.</span>
-      </div>
-      <div class="step">
-        <strong>3. Не нашли — оставьте заявку</strong>
-        <span>Если товара нет в каталоге, переходите на marketparts.kz и оставляйте заявку продавцам.</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-    <div class="bridge-block">
-      <div class="bridge-text">
-        <h3>Не нашли нужную запчасть в магазине?</h3>
-        <p>
-          Перейдите на отдельный сайт заявок Market Parts. Там можно оставить запрос, и продавцы сами предложат варианты.
-        </p>
-      </div>
-      <div class="bridge-actions">
-        <a class="btn darkred" href="https://marketparts.kz" target="_blank" rel="noopener noreferrer">Перейти на сайт заявок</a>
-        <a class="btn outline" href="{% url 'catalog_list' %}">Продолжить поиск в каталоге</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-    <div class="seller-block">
-      <h2>Продаёте запчасти?</h2>
-      <p>Размещайте товары и получайте сообщения от покупателей напрямую.</p>
-      <div class="seller-actions">
-        <a class="btn outline" href="{% url 'seller_login' %}">Войти продавцу</a>
-        <a class="btn red" href="{% url 'seller_register' %}">Зарегистрироваться</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="container footer-inner">
-    <div class="footer-links">
-      <a href="{% url 'catalog_list' %}">Каталог</a>
-      <a href="{% url 'seller_register' %}">Для продавцов</a>
-      <a href="https://marketparts.kz" target="_blank" rel="noopener noreferrer">Сайт заявок</a>
-      <a href="/">Главная</a>
-    </div>
-    <div>© Market Parts</div>
-  </div>
-</footer>
 {% endblock %}
