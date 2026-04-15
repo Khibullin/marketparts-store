@@ -20,16 +20,62 @@
 <section class="hero">
   <div class="container">
     <div class="hero-card">
-      <h1>Найдите запчасть по марке, модели, названию или артикулу</h1>
-      <p>Выберите автомобиль или введите название запчасти / артикул</p>
+      <h1>Подберите запчасть по автомобилю</h1>
+      <p>Сначала выберите страну, марку, модель и категорию</p>
 
-      <form action="/catalog/" method="get" class="search-box">
-        <input type="text" name="q" placeholder="Например: Camry 40 колодки, Tucson амортизатор, 04465-33471">
-        <button type="submit">🔍</button>
+      <form action="/catalog/" method="get" class="hero-filter-form">
+        <div class="hero-filter-grid">
+          <div class="hero-filter-field">
+            <label for="hero_country">Страна</label>
+            <select id="hero_country" name="country">
+              <option value="">Выберите страну</option>
+              {% for country in countries %}
+                <option value="{{ country.id }}">{{ country.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="hero-filter-field">
+            <label for="hero_brand">Марка</label>
+            <select id="hero_brand" name="brand">
+              <option value="">Сначала выберите страну</option>
+            </select>
+          </div>
+
+          <div class="hero-filter-field">
+            <label for="hero_model">Модель</label>
+            <select id="hero_model" name="model">
+              <option value="">Сначала выберите марку</option>
+            </select>
+          </div>
+
+          <div class="hero-filter-field">
+            <label for="hero_category">Категория</label>
+            <select id="hero_category" name="category">
+              <option value="">Выберите категорию</option>
+              {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="hero-filter-actions">
+          <button type="submit" class="btn white hero-main-btn">Показать запчасти</button>
+        </div>
       </form>
 
+      <div class="hero-divider"></div>
+
+      <div class="hero-secondary-search">
+        <h3>Или найдите по названию или артикулу</h3>
+        <form action="/catalog/" method="get" class="search-box">
+          <input type="text" name="q" placeholder="Например: тормозные колодки, амортизатор, 04465-33471">
+          <button type="submit">🔍</button>
+        </form>
+      </div>
+
       <div class="btn-row">
-        <a class="btn white" href="/catalog/">Перейти в каталог</a>
         <a class="btn darkred" href="https://marketparts.kz" target="_blank" rel="noopener noreferrer">Оставить заявку</a>
       </div>
     </div>
@@ -95,4 +141,56 @@
     <div>© Market Parts</div>
   </div>
 </footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const countrySelect = document.getElementById("hero_country");
+    const brandSelect = document.getElementById("hero_brand");
+    const modelSelect = document.getElementById("hero_model");
+
+    if (countrySelect) {
+        countrySelect.addEventListener("change", function () {
+            const countryId = this.value;
+
+            brandSelect.innerHTML = '<option value="">Сначала выберите страну</option>';
+            modelSelect.innerHTML = '<option value="">Сначала выберите марку</option>';
+
+            if (!countryId) {
+                brandSelect.innerHTML = '<option value="">Сначала выберите страну</option>';
+                return;
+            }
+
+            fetch(`/catalog/ajax/load-brands/?country=${countryId}`)
+                .then(response => response.json())
+                .then(data => {
+                    brandSelect.innerHTML = '<option value="">Выберите марку</option>';
+                    data.forEach(item => {
+                        brandSelect.innerHTML += `<option value="${item.id}">${item.name}</option>`;
+                    });
+                });
+        });
+    }
+
+    if (brandSelect) {
+        brandSelect.addEventListener("change", function () {
+            const brandId = this.value;
+
+            modelSelect.innerHTML = '<option value="">Сначала выберите марку</option>';
+
+            if (!brandId) {
+                return;
+            }
+
+            fetch(`/catalog/ajax/load-models/?brand=${brandId}`)
+                .then(response => response.json())
+                .then(data => {
+                    modelSelect.innerHTML = '<option value="">Выберите модель</option>';
+                    data.forEach(item => {
+                        modelSelect.innerHTML += `<option value="${item.id}">${item.name}</option>`;
+                    });
+                });
+        });
+    }
+});
+</script>
 {% endblock %}
