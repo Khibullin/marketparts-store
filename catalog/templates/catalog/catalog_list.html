@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Каталог — Market Parts{% endblock %}
+{% block title %}Магазин запчастей — Market Parts{% endblock %}
 
 {% block content %}
 <header class="topbar">
@@ -15,7 +15,7 @@
 
 <section class="section">
   <div class="container">
-    <h2>Каталог запчастей</h2>
+    <h2>Магазин запчастей</h2>
 
     <div class="accent">
       <form method="get" class="catalog-filter-form">
@@ -27,7 +27,7 @@
               id="q"
               name="q"
               value="{{ query }}"
-              placeholder="Название или артикул"
+              placeholder="Название запчасти или артикул"
             >
           </div>
 
@@ -132,13 +132,11 @@
       <div class="catalog-bridge-note">
         <div class="bridge-block">
           <div class="bridge-text">
-            <h3>Не нашли нужный вариант среди товаров?</h3>
-            <p>
-              Оставьте заявку на отдельном сайте заявок Market Parts. Это другой сервис, где продавцы сами могут предложить нужную запчасть.
-            </p>
+            <h3>Не нашли нужную запчасть?</h3>
+            <p>Оставьте заявку и получите предложения от продавцов</p>
           </div>
           <div class="bridge-actions">
-            <a class="btn darkred" href="https://marketparts.kz" target="_blank" rel="noopener noreferrer">Оставить заявку на marketparts.kz</a>
+            <a class="btn white" href="https://marketparts.kz" target="_blank" rel="noopener noreferrer">Оставить заявку</a>
           </div>
         </div>
       </div>
@@ -146,13 +144,11 @@
       <div class="bridge-empty">
         <div class="bridge-block">
           <div class="bridge-text">
-            <h3>Ничего не найдено в каталоге</h3>
-            <p>
-              Попробуй изменить параметры поиска. Если нужной запчасти всё равно нет — перейди на отдельный сайт заявок и отправь запрос продавцам.
-            </p>
+            <h3>Ничего не найдено в магазине</h3>
+            <p>Попробуйте изменить параметры поиска или оставьте заявку продавцам</p>
           </div>
           <div class="bridge-actions">
-            <a class="btn darkred" href="https://marketparts.kz" target="_blank" rel="noopener noreferrer">Перейти на сайт заявок</a>
+            <a class="btn white" href="https://marketparts.kz" target="_blank" rel="noopener noreferrer">Оставить заявку</a>
             <a href="{% url 'catalog_list' %}" class="btn outline">Сбросить фильтры</a>
           </div>
         </div>
