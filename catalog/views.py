@@ -176,7 +176,6 @@ def seller_profile(request):
 def seller_profile_edit(request):
     seller = get_object_or_404(SellerProfile, user=request.user)
     old_name = seller.name
-    old_city = seller.city
 
     if request.method == 'POST':
         form = SellerProfileForm(request.POST, instance=seller)
@@ -267,15 +266,29 @@ def edit_product(request, pk):
 
         if form.is_valid():
             updated_product = form.save(commit=False)
+
+            if request.POST.get('remove_main_image'):
+                if product.main_image:
+                    product.main_image.delete(save=False)
+                updated_product.main_image = None
+
+            if request.POST.get('remove_extra_images'):
+                for img in product.images.all():
+                    img.image.delete(save=False)
+                    img.delete()
+
             updated_product.seller_name = seller.name
             updated_product.whatsapp_number = seller.phone
             updated_product.city = seller.city
             updated_product.save()
 
             if files:
-                product.images.all().delete()
+                for img in product.images.all():
+                    img.image.delete(save=False)
+                    img.delete()
+
                 for f in files[:4]:
-                    ProductImage.objects.create(product=product, image=f)
+                    ProductImage.objects.create(product=updated_product, image=f)
 
             return redirect('seller_dashboard')
     else:
