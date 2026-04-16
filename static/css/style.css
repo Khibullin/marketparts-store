@@ -98,7 +98,7 @@ a {
   overflow: hidden;
 }
 
-.hero h1 {
+.hero-section h1 {
   margin: 0 0 10px;
   font-size: 34px;
   line-height: 1.04;
@@ -106,7 +106,15 @@ a {
   max-width: 760px;
 }
 
-.hero p {
+.hero-section h3 {
+  margin: 0 0 10px;
+  font-size: 20px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: #fff;
+}
+
+.hero-section p {
   margin: 0 0 16px;
   font-size: 18px;
   line-height: 1.32;
@@ -158,17 +166,13 @@ a {
 
 .hero-divider {
   height: 1px;
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.22);
   margin: 18px 0;
 }
 
-.hero-secondary-search h3,
-.hero-request-block h3 {
-  margin: 0 0 10px;
-  font-size: 20px;
-  line-height: 1.2;
-  font-weight: 700;
-  color: #fff;
+.hero-divider.strong {
+  background: rgba(255, 255, 255, 0.35);
+  margin-top: 22px;
 }
 
 .hero-inline-search {
@@ -198,12 +202,6 @@ a {
 
 .search-text-btn:hover {
   background: #186fdc;
-}
-
-.hero-request-block {
-  margin-top: 18px;
-  padding-top: 18px;
-  border-top: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 .hero-request-block p {
@@ -701,11 +699,11 @@ footer {
     padding: 28px;
   }
 
-  .hero h1 {
+  .hero-section h1 {
     font-size: 48px;
   }
 
-  .hero p {
+  .hero-section p {
     font-size: 22px;
   }
 
