@@ -9,20 +9,44 @@ class SellerRegisterForm(forms.ModelForm):
 
     class Meta:
         model = SellerProfile
-        fields = ['name', 'phone']
+        fields = ['name', 'phone', 'city']
         labels = {
             'name': 'Название магазина',
             'phone': 'Телефон / WhatsApp',
+            'city': 'Город',
+        }
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'placeholder': 'Например: Auto Parts Алматы'
+            }),
+            'phone': forms.TextInput(attrs={
+                'placeholder': 'Например: 77713607040'
+            }),
+            'city': forms.TextInput(attrs={
+                'placeholder': 'Например: Алматы'
+            }),
         }
 
 
 class SellerProfileForm(forms.ModelForm):
     class Meta:
         model = SellerProfile
-        fields = ['name', 'phone']
+        fields = ['name', 'phone', 'city']
         labels = {
             'name': 'Название магазина',
             'phone': 'Телефон / WhatsApp',
+            'city': 'Город',
+        }
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'placeholder': 'Например: Auto Parts Алматы'
+            }),
+            'phone': forms.TextInput(attrs={
+                'placeholder': 'Например: 77713607040'
+            }),
+            'city': forms.TextInput(attrs={
+                'placeholder': 'Например: Алматы'
+            }),
         }
 
 
@@ -62,6 +86,25 @@ class ProductForm(forms.ModelForm):
             'main_image': 'Главное фото',
             'compatibility': 'Подходит для',
             'description': 'Описание',
+        }
+        widgets = {
+            'title': forms.TextInput(attrs={
+                'placeholder': 'Например: Амортизатор передний Camry 40'
+            }),
+            'article': forms.TextInput(attrs={
+                'placeholder': 'Если есть артикул — укажите'
+            }),
+            'price': forms.NumberInput(attrs={
+                'placeholder': 'Цена в тенге'
+            }),
+            'compatibility': forms.Textarea(attrs={
+                'placeholder': 'Например: Toyota Camry 40, 2006–2011',
+                'rows': 3
+            }),
+            'description': forms.Textarea(attrs={
+                'placeholder': 'Опишите состояние, оригинал или аналог, комплектность',
+                'rows': 5
+            }),
         }
 
     def __init__(self, *args, **kwargs):

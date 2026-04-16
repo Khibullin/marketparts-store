@@ -112,7 +112,8 @@ def seller_register(request):
                 SellerProfile.objects.create(
                     user=user,
                     name=form.cleaned_data['name'],
-                    phone=form.cleaned_data['phone']
+                    phone=form.cleaned_data['phone'],
+                    city=form.cleaned_data.get('city', '')
                 )
 
                 return redirect('seller_login')
@@ -175,6 +176,7 @@ def seller_profile(request):
 def seller_profile_edit(request):
     seller = get_object_or_404(SellerProfile, user=request.user)
     old_name = seller.name
+    old_city = seller.city
 
     if request.method == 'POST':
         form = SellerProfileForm(request.POST, instance=seller)
@@ -184,11 +186,13 @@ def seller_profile_edit(request):
             if old_name != updated_seller.name:
                 Product.objects.filter(seller_name=old_name).update(
                     seller_name=updated_seller.name,
-                    whatsapp_number=updated_seller.phone
+                    whatsapp_number=updated_seller.phone,
+                    city=updated_seller.city
                 )
             else:
                 Product.objects.filter(seller_name=updated_seller.name).update(
-                    whatsapp_number=updated_seller.phone
+                    whatsapp_number=updated_seller.phone,
+                    city=updated_seller.city
                 )
 
             return redirect('seller_profile')
@@ -230,6 +234,7 @@ def add_product(request):
             product = form.save(commit=False)
             product.seller_name = seller.name
             product.whatsapp_number = seller.phone
+            product.city = seller.city
             product.save()
 
             for f in files[:4]:
@@ -264,6 +269,7 @@ def edit_product(request, pk):
             updated_product = form.save(commit=False)
             updated_product.seller_name = seller.name
             updated_product.whatsapp_number = seller.phone
+            updated_product.city = seller.city
             updated_product.save()
 
             if files:
