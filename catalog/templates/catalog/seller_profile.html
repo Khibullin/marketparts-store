@@ -17,6 +17,7 @@
   <div class="container">
     <div class="seller-page-card">
       <h2>Профиль продавца</h2>
+      <p class="dashboard-subtitle">Информация о вашем магазине</p>
 
       <div class="detail-grid">
         <div class="detail-box">
@@ -30,20 +31,26 @@
         </div>
 
         <div class="detail-box">
-          <div class="detail-label">Логин</div>
-          <div class="detail-value">{{ seller.user.username }}</div>
+          <div class="detail-label">Город</div>
+          <div class="detail-value">
+            {% if seller.city %}
+              {{ seller.city }}
+            {% else %}
+              Не указан
+            {% endif %}
+          </div>
         </div>
 
         <div class="detail-box">
-          <div class="detail-label">Товаров в кабинете</div>
+          <div class="detail-label">Товаров в магазине</div>
           <div class="detail-value">{{ products_count }}</div>
         </div>
       </div>
 
-      <div class="form-action-row" style="margin-top:16px;">
-        <a href="{% url 'seller_profile_edit' %}" class="btn red">Редактировать профиль</a>
+      <div class="form-action-row">
+        <a href="{% url 'seller_profile_edit' %}" class="btn seller-login-btn">Редактировать профиль</a>
+        <a href="{% url 'seller_dashboard' %}" class="btn outline">Назад в кабинет</a>
         <a href="{% url 'seller_profile_delete' %}" class="btn danger">Удалить профиль</a>
-        <a href="{% url 'seller_dashboard' %}" class="btn outline">Назад</a>
       </div>
     </div>
   </div>

@@ -18,7 +18,10 @@
     <div class="dashboard-header">
       <div>
         <h2>Кабинет продавца</h2>
-        <p class="dashboard-subtitle">{{ seller.name }} · {{ seller.phone }}</p>
+        <p class="dashboard-subtitle">
+          {{ seller.name }} · {{ seller.phone }}
+          {% if seller.city %} · {{ seller.city }}{% endif %}
+        </p>
       </div>
 
       <div class="dashboard-actions">
@@ -45,10 +48,21 @@
                 <div class="product-title">{{ product.title }}</div>
               </a>
 
-              <div class="product-article">Артикул: {{ product.article }}</div>
+              {% if product.article %}
+                <div class="product-article">Артикул: {{ product.article }}</div>
+              {% endif %}
+
+              {% if product.brand or product.car_model %}
+                <div class="product-seller">
+                  {% if product.brand %}{{ product.brand.name }}{% endif %}
+                  {% if product.car_model %} / {{ product.car_model.name }}{% endif %}
+                </div>
+              {% endif %}
+
               <div class="product-price">{{ product.price }} ₸</div>
               <div class="product-seller">
                 {{ product.get_condition_display }} · {{ product.get_status_display }}
+                {% if product.city %} · {{ product.city }}{% endif %}
               </div>
 
               <div class="dashboard-card-actions">
@@ -62,7 +76,7 @@
     {% else %}
       <div class="accent">
         <h3>Пока товаров нет</h3>
-        <p>Добавь первый товар в свой каталог.</p>
+        <p>Добавьте первый товар в свой магазин.</p>
       </div>
     {% endif %}
   </div>
