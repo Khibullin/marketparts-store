@@ -129,7 +129,9 @@
                 <div class="product-title">{{ product.title }}</div>
               </a>
 
-              <div class="product-article">Артикул: {{ product.article }}</div>
+              {% if product.article %}
+                <div class="product-article">Артикул: {{ product.article }}</div>
+              {% endif %}
 
               {% if product.brand or product.car_model %}
                 <div class="product-seller">
@@ -138,12 +140,20 @@
                 </div>
               {% endif %}
 
-              <div class="product-seller">{{ product.seller_name }}</div>
               <div class="product-price">{{ product.price }} ₸</div>
+
+              <div class="product-seller">
+                {{ product.seller_name }}
+                {% if product.city %} · {{ product.city }}{% endif %}
+              </div>
+
+              <div class="product-seller">
+                {{ product.get_condition_display }}
+              </div>
 
               <a
                 class="btn-green"
-                href="https://wa.me/{{ product.whatsapp_number }}?text=Здравствуйте!%20Интересует%20товар:%20{{ product.title|urlencode }}.%20Артикул:%20{{ product.article|urlencode }}"
+                href="https://wa.me/{{ product.whatsapp_number }}?text=Здравствуйте!%20Интересует%20товар:%20{{ product.title|urlencode }}{% if product.article %}.%20Артикул:%20{{ product.article|urlencode }}{% endif %}"
                 target="_blank"
                 rel="noopener noreferrer"
               >
