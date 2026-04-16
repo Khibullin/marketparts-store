@@ -18,73 +18,98 @@
     <h2>Магазин запчастей</h2>
 
     <div class="accent">
-      <form method="get" class="catalog-filter-form">
-        <div class="filter-grid">
-          <div class="filter-field filter-search">
-            <label for="q">Поиск</label>
-            <input
-              type="text"
-              id="q"
-              name="q"
-              value="{{ query }}"
-              placeholder="Название запчасти или артикул"
-            >
-          </div>
+      <div class="catalog-search-sections">
 
-          <div class="filter-field">
-            <label for="country">Страна</label>
-            <select id="country" name="country">
-              <option value="">Все страны</option>
-              {% for country in countries %}
-                <option value="{{ country.id }}" {% if selected_country == country.id|slugify %}selected{% endif %}>
-                  {{ country.name }}
-                </option>
-              {% endfor %}
-            </select>
-          </div>
+        <div class="catalog-search-section">
+          <h3 class="catalog-section-title">Подбор запчасти по автомобилю</h3>
 
-          <div class="filter-field">
-            <label for="brand">Марка</label>
-            <select id="brand" name="brand">
-              <option value="">Все марки</option>
-              {% for brand in brands %}
-                <option value="{{ brand.id }}" {% if selected_brand == brand.id|slugify %}selected{% endif %}>
-                  {{ brand.name }}
-                </option>
-              {% endfor %}
-            </select>
-          </div>
+          <form method="get" class="catalog-filter-form">
+            <div class="filter-grid filter-grid-vehicle">
+              <div class="filter-field">
+                <label for="country">Страна</label>
+                <select id="country" name="country">
+                  <option value="">Все страны</option>
+                  {% for country in countries %}
+                    <option value="{{ country.id }}" {% if selected_country == country.id|slugify %}selected{% endif %}>
+                      {{ country.name }}
+                    </option>
+                  {% endfor %}
+                </select>
+              </div>
 
-          <div class="filter-field">
-            <label for="model">Модель</label>
-            <select id="model" name="model">
-              <option value="">Все модели</option>
-              {% for model in models %}
-                <option value="{{ model.id }}" {% if selected_model == model.id|slugify %}selected{% endif %}>
-                  {{ model.name }}
-                </option>
-              {% endfor %}
-            </select>
-          </div>
+              <div class="filter-field">
+                <label for="brand">Марка</label>
+                <select id="brand" name="brand">
+                  <option value="">Все марки</option>
+                  {% for brand in brands %}
+                    <option value="{{ brand.id }}" {% if selected_brand == brand.id|slugify %}selected{% endif %}>
+                      {{ brand.name }}
+                    </option>
+                  {% endfor %}
+                </select>
+              </div>
 
-          <div class="filter-field">
-            <label for="category">Категория</label>
-            <select id="category" name="category">
-              <option value="">Все категории</option>
-              {% for category in categories %}
-                <option value="{{ category.id }}" {% if selected_category == category.id|slugify %}selected{% endif %}>
-                  {{ category.name }}
-                </option>
-              {% endfor %}
-            </select>
-          </div>
+              <div class="filter-field">
+                <label for="model">Модель</label>
+                <select id="model" name="model">
+                  <option value="">Все модели</option>
+                  {% for model in models %}
+                    <option value="{{ model.id }}" {% if selected_model == model.id|slugify %}selected{% endif %}>
+                      {{ model.name }}
+                    </option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="filter-field">
+                <label for="category">Категория</label>
+                <select id="category" name="category">
+                  <option value="">Все категории</option>
+                  {% for category in categories %}
+                    <option value="{{ category.id }}" {% if selected_category == category.id|slugify %}selected{% endif %}>
+                      {{ category.name }}
+                    </option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+
+            <div class="filter-actions">
+              <button type="submit" class="btn darkred">Показать запчасти</button>
+              <a href="{% url 'catalog_list' %}" class="btn outline">Сбросить</a>
+            </div>
+          </form>
         </div>
 
-        <div class="filter-actions">
-          <button type="submit" class="btn darkred">Найти</button>
-          <a href="{% url 'catalog_list' %}" class="btn outline">Сбросить</a>
+        <div class="catalog-divider">
+          <span>Или найдите по названию или артикулу</span>
         </div>
-      </form>
+
+        <div class="catalog-search-section">
+          <form method="get" class="catalog-text-search-form">
+            <div class="catalog-text-search-row">
+              <input
+                type="text"
+                id="q"
+                name="q"
+                value="{{ query }}"
+                placeholder="Например: тормозные колодки, амортизатор, 04465-33471"
+              >
+              <button type="submit" class="btn search-text-btn">Найти</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="catalog-divider strong">
+          <span>Не нашли нужную запчасть?</span>
+        </div>
+
+        <div class="catalog-search-section catalog-request-section">
+          <p class="catalog-request-text">Оставьте заявку и получите предложения от продавцов</p>
+          <a class="btn white catalog-request-btn" href="https://marketparts.kz" target="_blank" rel="noopener noreferrer">Оставить заявку</a>
+        </div>
+
+      </div>
     </div>
 
     {% if products %}
@@ -127,18 +152,6 @@
             </div>
           </article>
         {% endfor %}
-      </div>
-
-      <div class="catalog-bridge-note">
-        <div class="bridge-block">
-          <div class="bridge-text">
-            <h3>Не нашли нужную запчасть?</h3>
-            <p>Оставьте заявку и получите предложения от продавцов</p>
-          </div>
-          <div class="bridge-actions">
-            <a class="btn white" href="https://marketparts.kz" target="_blank" rel="noopener noreferrer">Оставить заявку</a>
-          </div>
-        </div>
       </div>
     {% else %}
       <div class="bridge-empty">
