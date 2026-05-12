@@ -9,9 +9,18 @@ DEBUG = os.getenv("DEBUG", "True") == "True"
 
 allowed_hosts_env = os.getenv(
     "ALLOWED_HOSTS",
-    "marketparts-store-1.onrender.com,marketparts-store.onrender.com,marketparts-store.kz,www.marketparts-store.kz,127.0.0.1,localhost"
+    "store.zpt.kz,www.store.zpt.kz,marketparts-store.onrender.com,marketparts-store-1.onrender.com,127.0.0.1,localhost"
 )
 ALLOWED_HOSTS = [host.strip() for host in allowed_hosts_env.split(",") if host.strip()]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://store.zpt.kz",
+    "https://www.store.zpt.kz",
+    "https://marketparts-store.onrender.com",
+    "https://marketparts-store-1.onrender.com",
+]
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 INSTALLED_APPS = [
     'django.contrib.admin',
