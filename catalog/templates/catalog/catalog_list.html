@@ -1,182 +1,652 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Магазин запчастей — Market Parts{% endblock %}
+{% block title %}ZPT Store — Магазин автозапчастей{% endblock %}
 
 {% block content %}
+
+<style>
+body{
+  background:#f6f6f6;
+  font-family:Arial,sans-serif;
+  color:#111;
+}
+
+.topbar{
+  background:#fff;
+  border-bottom:1px solid #ececec;
+}
+
+.topbar-inner{
+  max-width:1200px;
+  margin:auto;
+  padding:18px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  text-decoration:none;
+}
+
+.brand img{
+  width:48px;
+  height:48px;
+  border-radius:12px;
+}
+
+.brand-title{
+  font-size:22px;
+  font-weight:800;
+  color:#111;
+}
+
+.brand-title span{
+  color:#ef3d2f;
+}
+
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:16px;
+}
+
+.hero{
+  background:#fff;
+  border-radius:24px;
+  padding:28px;
+  margin-top:24px;
+  box-shadow:0 2px 12px rgba(0,0,0,.04);
+}
+
+.hero-grid{
+  display:grid;
+  grid-template-columns:1fr 420px;
+  gap:24px;
+}
+
+.hero-title{
+  font-size:56px;
+  line-height:1;
+  font-weight:900;
+  margin-bottom:18px;
+}
+
+.hero-title span{
+  color:#ef3d2f;
+}
+
+.hero-sub{
+  font-size:22px;
+  line-height:1.5;
+  color:#555;
+  max-width:700px;
+}
+
+.hero-actions{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.action-card{
+  background:#fff;
+  border:1px solid #eee;
+  border-radius:20px;
+  padding:22px;
+  text-decoration:none;
+  color:#111;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  transition:.2s;
+}
+
+.action-card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 4px 18px rgba(0,0,0,.06);
+}
+
+.action-title{
+  font-size:28px;
+  font-weight:800;
+  margin-bottom:6px;
+}
+
+.action-sub{
+  color:#666;
+  font-size:16px;
+}
+
+.search-box{
+  margin-top:28px;
+}
+
+.search-row{
+  display:flex;
+  gap:14px;
+}
+
+.search-row input{
+  flex:1;
+  height:64px;
+  border-radius:18px;
+  border:1px solid #ddd;
+  padding:0 22px;
+  font-size:20px;
+}
+
+.search-btn{
+  width:180px;
+  border:none;
+  border-radius:18px;
+  background:#ef3d2f;
+  color:#fff;
+  font-size:22px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.filter-box{
+  margin-top:20px;
+  background:#fff;
+  border:1px solid #eee;
+  border-radius:20px;
+  padding:20px;
+}
+
+.filter-title{
+  font-size:24px;
+  font-weight:800;
+  margin-bottom:18px;
+}
+
+.filter-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:14px;
+}
+
+.filter-grid select{
+  height:58px;
+  border-radius:16px;
+  border:1px solid #ddd;
+  padding:0 16px;
+  font-size:18px;
+}
+
+.products-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:34px;
+  margin-bottom:20px;
+}
+
+.products-head h2{
+  font-size:38px;
+  margin:0;
+}
+
+.products-link{
+  color:#ef3d2f;
+  text-decoration:none;
+  font-size:22px;
+  font-weight:700;
+}
+
+.products{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+}
+
+.product{
+  background:#fff;
+  border-radius:22px;
+  overflow:hidden;
+  box-shadow:0 2px 10px rgba(0,0,0,.04);
+}
+
+.product img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+  display:block;
+}
+
+.product-body{
+  padding:18px;
+}
+
+.product-title{
+  font-size:24px;
+  font-weight:800;
+  line-height:1.3;
+  margin-bottom:10px;
+  color:#111;
+}
+
+.product-price{
+  color:#ef3d2f;
+  font-size:32px;
+  font-weight:900;
+  margin-bottom:12px;
+}
+
+.product-seller{
+  color:#666;
+  margin-bottom:8px;
+  font-size:17px;
+}
+
+.btn-green{
+  display:block;
+  width:100%;
+  background:#1faa3f;
+  color:#fff;
+  text-align:center;
+  text-decoration:none;
+  padding:14px;
+  border-radius:14px;
+  font-weight:700;
+  margin-top:14px;
+}
+
+.cta{
+  background:#fff0f0;
+  border-radius:22px;
+  padding:24px;
+  margin-top:34px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+}
+
+.cta-title{
+  font-size:34px;
+  font-weight:900;
+  margin-bottom:8px;
+}
+
+.cta-text{
+  font-size:20px;
+  color:#555;
+}
+
+.cta-btn{
+  background:#ef3d2f;
+  color:#fff;
+  text-decoration:none;
+  padding:18px 32px;
+  border-radius:18px;
+  font-size:22px;
+  font-weight:800;
+  white-space:nowrap;
+}
+
+.seller-block{
+  background:#f1fff2;
+  border-radius:22px;
+  padding:24px;
+  margin-top:20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+}
+
+.seller-title{
+  font-size:34px;
+  font-weight:900;
+  margin-bottom:8px;
+}
+
+.seller-text{
+  font-size:20px;
+  color:#555;
+}
+
+.seller-btn{
+  background:#17a531;
+  color:#fff;
+  text-decoration:none;
+  padding:18px 30px;
+  border-radius:18px;
+  font-size:22px;
+  font-weight:800;
+  white-space:nowrap;
+}
+
+.footer{
+  margin-top:40px;
+  padding:24px 0;
+  border-top:1px solid #e8e8e8;
+}
+
+.footer-links{
+  display:flex;
+  justify-content:center;
+  gap:50px;
+  flex-wrap:wrap;
+}
+
+.footer-links a{
+  color:#666;
+  text-decoration:none;
+  font-size:18px;
+}
+
+@media(max-width:900px){
+
+  .hero-grid{
+    grid-template-columns:1fr;
+  }
+
+  .hero-title{
+    font-size:44px;
+  }
+
+  .hero-sub{
+    font-size:18px;
+  }
+
+  .search-row{
+    flex-direction:column;
+  }
+
+  .search-btn{
+    width:100%;
+    height:58px;
+  }
+
+  .filter-grid{
+    grid-template-columns:1fr;
+  }
+
+  .products{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .cta,
+  .seller-block{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+}
+
+@media(max-width:640px){
+
+  .hero{
+    padding:20px;
+  }
+
+  .hero-title{
+    font-size:34px;
+  }
+
+  .products{
+    grid-template-columns:1fr;
+  }
+
+  .products-head h2{
+    font-size:28px;
+  }
+
+}
+</style>
+
 <header class="topbar">
-  <div class="container topbar-inner">
+  <div class="topbar-inner">
+
     <a class="brand" href="/">
-      <img src="{% static 'images/logo.jpg' %}" alt="Market Parts">
-      <div class="brand-title">Market <span>Parts</span></div>
+      <img src="{% static 'images/logo.jpg' %}" alt="ZPT Store">
+      <div class="brand-title">
+        ZPT <span>Store</span>
+      </div>
     </a>
+
   </div>
 </header>
 
-<section class="section">
-  <div class="container">
-    <h2>Магазин запчастей</h2>
+<div class="container">
 
-    <div class="accent">
-      <div class="catalog-search-sections">
+  <section class="hero">
 
-        <div class="catalog-search-section">
-          <h3 class="catalog-section-title">Подбор запчасти по автомобилю</h3>
+    <div class="hero-grid">
 
-          <form method="get" class="catalog-filter-form">
-            <div class="filter-grid filter-grid-vehicle">
-              <div class="filter-field">
-                <label for="country">Страна</label>
-                <select id="country" name="country">
-                  <option value="">Все страны</option>
-                  {% for country in countries %}
-                    <option value="{{ country.id }}" {% if selected_country == country.id|slugify %}selected{% endif %}>
-                      {{ country.name }}
-                    </option>
-                  {% endfor %}
-                </select>
-              </div>
+      <div>
 
-              <div class="filter-field">
-                <label for="brand">Марка</label>
-                <select id="brand" name="brand">
-                  <option value="">Все марки</option>
-                  {% for brand in brands %}
-                    <option value="{{ brand.id }}" {% if selected_brand == brand.id|slugify %}selected{% endif %}>
-                      {{ brand.name }}
-                    </option>
-                  {% endfor %}
-                </select>
-              </div>
+        <div class="hero-title">
+          Запчасти <br>
+          <span>от продавцов</span>
+        </div>
 
-              <div class="filter-field">
-                <label for="model">Модель</label>
-                <select id="model" name="model">
-                  <option value="">Все модели</option>
-                  {% for model in models %}
-                    <option value="{{ model.id }}" {% if selected_model == model.id|slugify %}selected{% endif %}>
-                      {{ model.name }}
-                    </option>
-                  {% endfor %}
-                </select>
-              </div>
+        <div class="hero-sub">
+          Новые и б/у запчасти для легковых и грузовых автомобилей по Казахстану
+        </div>
 
-              <div class="filter-field">
-                <label for="category">Категория</label>
-                <select id="category" name="category">
-                  <option value="">Все категории</option>
-                  {% for category in categories %}
-                    <option value="{{ category.id }}" {% if selected_category == category.id|slugify %}selected{% endif %}>
-                      {{ category.name }}
-                    </option>
-                  {% endfor %}
-                </select>
-              </div>
+      </div>
+
+      <div class="hero-actions">
+
+        <a href="{% url 'catalog_list' %}" class="action-card">
+          <div>
+            <div class="action-title">Купить</div>
+            <div class="action-sub">новые и б/у запчасти</div>
+          </div>
+          →
+        </a>
+
+        <a href="{% url 'seller_register' %}" class="action-card">
+          <div>
+            <div class="action-title">Продать</div>
+            <div class="action-sub">разместите товар бесплатно</div>
+          </div>
+          →
+        </a>
+
+      </div>
+
+    </div>
+
+    <div class="search-box">
+
+      <form method="get">
+
+        <div class="search-row">
+
+          <input
+            type="text"
+            name="q"
+            value="{{ query }}"
+            placeholder="Поиск по названию или артикулу"
+          >
+
+          <button type="submit" class="search-btn">
+            Найти
+          </button>
+
+        </div>
+
+        <div class="filter-box">
+
+          <div class="filter-title">
+            Подбор запчастей
+          </div>
+
+          <div class="filter-grid">
+
+            <select id="brand" name="brand">
+              <option value="">Марка</option>
+              {% for brand in brands %}
+                <option value="{{ brand.id }}">
+                  {{ brand.name }}
+                </option>
+              {% endfor %}
+            </select>
+
+            <select id="model" name="model">
+              <option value="">Модель</option>
+              {% for model in models %}
+                <option value="{{ model.id }}">
+                  {{ model.name }}
+                </option>
+              {% endfor %}
+            </select>
+
+            <select id="category" name="category">
+              <option value="">Категория запчасти</option>
+              {% for category in categories %}
+                <option value="{{ category.id }}">
+                  {{ category.name }}
+                </option>
+              {% endfor %}
+            </select>
+
+          </div>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </section>
+
+  <div class="products-head">
+    <h2>Популярные товары</h2>
+    <a class="products-link" href="{% url 'catalog_list' %}">
+      Смотреть все →
+    </a>
+  </div>
+
+  {% if products %}
+
+    <div class="products">
+
+      {% for product in products %}
+
+      <article class="product">
+
+        <a href="{% url 'product_detail' product.pk %}">
+
+          {% if product.main_image %}
+            <img src="{{ product.main_image.url }}" alt="{{ product.title }}">
+          {% else %}
+            <img src="{% static 'images/product1.jpg' %}" alt="{{ product.title }}">
+          {% endif %}
+
+        </a>
+
+        <div class="product-body">
+
+          <a href="{% url 'product_detail' product.pk %}" style="text-decoration:none">
+
+            <div class="product-title">
+              {{ product.title }}
             </div>
 
-            <div class="filter-actions">
-              <button type="submit" class="btn darkred">Показать запчасти</button>
-              <a href="{% url 'catalog_list' %}" class="btn outline">Сбросить</a>
-            </div>
-          </form>
+          </a>
+
+          <div class="product-price">
+            {{ product.price }} ₸
+          </div>
+
+          <div class="product-seller">
+            {{ product.city }}
+          </div>
+
+          <div class="product-seller">
+            {{ product.get_condition_display }}
+          </div>
+
+          <a
+            class="btn-green"
+            href="https://wa.me/{{ product.whatsapp_number }}"
+            target="_blank"
+          >
+            Написать продавцу
+          </a>
+
         </div>
 
-        <div class="catalog-divider">
-          <span>Или найдите по названию или артикулу</span>
-        </div>
+      </article>
 
-        <div class="catalog-search-section">
-          <form method="get" class="catalog-text-search-form">
-            <div class="catalog-text-search-row">
-              <input
-                type="text"
-                id="q"
-                name="q"
-                value="{{ query }}"
-                placeholder="Например: тормозные колодки, амортизатор, 04465-33471"
-              >
-              <button type="submit" class="btn search-text-btn">Найти</button>
-            </div>
-          </form>
-        </div>
+      {% endfor %}
 
-        <div class="catalog-divider strong">
-          <span>Не нашли нужную запчасть?</span>
-        </div>
+    </div>
 
-        <div class="catalog-search-section catalog-request-section">
-          <p class="catalog-request-text">Оставьте заявку и получите предложения от продавцов</p>
-          <a class="btn white catalog-request-btn" href="https://marketparts.kz" target="_blank" rel="noopener noreferrer">Оставить заявку</a>
-        </div>
+  {% endif %}
 
+  <div class="cta">
+
+    <div>
+      <div class="cta-title">
+        Не нашли нужную запчасть?
+      </div>
+
+      <div class="cta-text">
+        Оставьте заявку — продавцы предложат варианты
       </div>
     </div>
 
-    {% if products %}
-      <div class="products">
-        {% for product in products %}
-          <article class="product">
-            <a href="{% url 'product_detail' product.pk %}">
-              {% if product.main_image %}
-                <img src="{{ product.main_image.url }}" alt="{{ product.title }}">
-              {% else %}
-                <img src="{% static 'images/product1.jpg' %}" alt="{{ product.title }}">
-              {% endif %}
-            </a>
+    <a
+      class="cta-btn"
+      href="https://zpt.kz/request-parts/"
+    >
+      Оставить заявку
+    </a>
 
-            <div class="product-body">
-              <a href="{% url 'product_detail' product.pk %}">
-                <div class="product-title">{{ product.title }}</div>
-              </a>
-
-              {% if product.article %}
-                <div class="product-article">Артикул: {{ product.article }}</div>
-              {% endif %}
-
-              {% if product.brand or product.car_model %}
-                <div class="product-seller">
-                  {% if product.brand %}{{ product.brand.name }}{% endif %}
-                  {% if product.car_model %} / {{ product.car_model.name }}{% endif %}
-                </div>
-              {% endif %}
-
-              <div class="product-price">{{ product.price }} ₸</div>
-
-              <div class="product-seller">
-                {{ product.seller_name }}
-                {% if product.city %} · {{ product.city }}{% endif %}
-              </div>
-
-              <div class="product-seller">
-                {{ product.get_condition_display }}
-              </div>
-
-              <a
-                class="btn-green"
-                href="https://wa.me/{{ product.whatsapp_number }}?text=Здравствуйте!%20Интересует%20товар:%20{{ product.title|urlencode }}{% if product.article %}.%20Артикул:%20{{ product.article|urlencode }}{% endif %}"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Написать продавцу
-              </a>
-            </div>
-          </article>
-        {% endfor %}
-      </div>
-    {% else %}
-      <div class="bridge-empty">
-        <div class="bridge-block">
-          <div class="bridge-text">
-            <h3>Ничего не найдено в магазине</h3>
-            <p>Попробуйте изменить параметры поиска или оставьте заявку продавцам</p>
-          </div>
-          <div class="bridge-actions">
-            <a class="btn white" href="https://marketparts.kz" target="_blank" rel="noopener noreferrer">Оставить заявку</a>
-            <a href="{% url 'catalog_list' %}" class="btn outline">Сбросить фильтры</a>
-          </div>
-        </div>
-      </div>
-    {% endif %}
   </div>
-</section>
+
+  <div class="seller-block">
+
+    <div>
+      <div class="seller-title">
+        Продаёте запчасти?
+      </div>
+
+      <div class="seller-text">
+        Размещайте товары бесплатно и получайте клиентов
+      </div>
+    </div>
+
+    <a
+      class="seller-btn"
+      href="{% url 'seller_login' %}"
+    >
+      Войти / Зарегистрироваться
+    </a>
+
+  </div>
+
+  <footer class="footer">
+
+    <div class="footer-links">
+
+      <a href="#">
+        Гид ZPT Store
+      </a>
+
+      <a href="#">
+        Частые вопросы
+      </a>
+
+      <a href="#">
+        Обратная связь
+      </a>
+
+    </div>
+
+  </footer>
+
+</div>
+
 {% endblock %}
