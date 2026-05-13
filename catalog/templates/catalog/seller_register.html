@@ -32,8 +32,22 @@
         </p>
 
         <p>
-          <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+          <label for="{{ form.password.id_for_label }}">
+            {{ form.password.label }}
+          </label>
+
           {{ form.password }}
+
+          <label
+            style="display:flex;align-items:center;gap:8px;margin-top:8px;font-size:14px;"
+          >
+            <input
+              type="checkbox"
+              onclick="togglePasswordRegister()"
+            >
+
+            Показать пароль
+          </label>
         </p>
 
         <p>
@@ -59,4 +73,17 @@
     </div>
   </div>
 </section>
+<script>
+function togglePasswordRegister() {
+
+  const input = document.getElementById("id_password");
+
+  if (input.type === "password") {
+    input.type = "text";
+  } else {
+    input.type = "password";
+  }
+
+}
+</script>
 {% endblock %}

@@ -38,6 +38,10 @@
             <a href="{% url 'product_detail' product.pk %}">
               {% if product.main_image %}
                 <img src="{{ product.main_image.url }}" alt="{{ product.title }}">
+
+              {% elif product.images.first %}
+                <img src="{{ product.images.first.image.url }}" alt="{{ product.title }}">
+
               {% else %}
                 <img src="{% static 'images/product1.jpg' %}" alt="{{ product.title }}">
               {% endif %}

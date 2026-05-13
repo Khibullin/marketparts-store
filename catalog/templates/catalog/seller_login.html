@@ -31,8 +31,27 @@
         </p>
 
         <p>
-          <label for="password">Пароль</label>
-          <input type="password" id="password" name="password" required>
+          <label for="password">
+            Пароль
+          </label>
+
+          <input
+            type="password"
+            id="password"
+            name="password"
+            required
+          >
+
+          <label
+            style="display:flex;align-items:center;gap:8px;margin-top:8px;font-size:14px;"
+          >
+            <input
+              type="checkbox"
+              onclick="togglePasswordLogin()"
+            >
+
+            Показать пароль
+          </label>
         </p>
 
         <button type="submit" class="btn red">Войти</button>
@@ -45,4 +64,17 @@
     </div>
   </div>
 </section>
+<script>
+function togglePasswordLogin() {
+
+  const input = document.getElementById("password");
+
+  if (input.type === "password") {
+    input.type = "text";
+  } else {
+    input.type = "password";
+  }
+
+}
+</script>
 {% endblock %}
