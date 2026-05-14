@@ -37,23 +37,40 @@
           <article class="product">
             <a href="{% url 'product_detail' product.pk %}">
               {% if product.main_image %}
-                <img src="{{ product.main_image.url }}" alt="{{ product.title }}">
+                <img
+                  src="{{ product.main_image.url }}"
+                  alt="{{ product.title }}"
+                  {% if product.images.first %}
+                    onerror="this.onerror=null;this.src='{{ product.images.first.image.url }}';"
+                  {% else %}
+                    onerror="this.onerror=null;this.src='{% static 'images/product1.jpg' %}';"
+                  {% endif %}
+                >
 
               {% elif product.images.first %}
-                <img src="{{ product.images.first.image.url }}" alt="{{ product.title }}">
+                <img
+                  src="{{ product.images.first.image.url }}"
+                  alt="{{ product.title }}"
+                  onerror="this.onerror=null;this.src='{% static 'images/product1.jpg' %}';"
+                >
+
+              {% else %}
+                <img
+                  src="{% static 'images/product1.jpg' %}"
+                  alt="{{ product.title }}"
+                >
+              {% endif %}
+                >
+
+              {% elif product.images.first %}
+                <img
+                  src="{{ product.images.first.image.url }}"
+                  alt="{{ product.title }}"
+                  onerror="this.onerror=null;this.src='{% static 'images/product1.jpg' %}';"
+                >
 
               {% else %}
                 <img src="{% static 'images/product1.jpg' %}" alt="{{ product.title }}">
-              {% endif %}
-            </a>
-
-            <div class="product-body">
-              <a href="{% url 'product_detail' product.pk %}">
-                <div class="product-title">{{ product.title }}</div>
-              </a>
-
-              {% if product.article %}
-                <div class="product-article">Артикул: {{ product.article }}</div>
               {% endif %}
 
               {% if product.brand or product.car_model %}
