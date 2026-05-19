@@ -170,7 +170,16 @@
             <p>📱 {{ seller.phone }}</p>
 
             {% if seller.instagram %}
-              <p>Instagram: {{ seller.instagram }}</p>
+              <p>
+                Instagram:
+                <a
+                  href="{{ seller.instagram }}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {{ seller.instagram }}
+                </a>
+              </p>
             {% endif %}
 
             {% if seller.website %}
