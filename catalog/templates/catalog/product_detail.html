@@ -258,6 +258,56 @@
       </div>
     {% endif %}
 
+    {% if seller_products %}
+      <div class="detail-section-card">
+
+        <h2>Другие товары продавца</h2>
+
+        <div class="products">
+
+          {% for p in seller_products %}
+            <article class="product">
+
+              <a href="{% url 'product_detail' p.pk %}">
+
+                {% if p.main_image %}
+                  <img
+                    src="{{ p.main_image.url }}"
+                    alt="{{ p.title }}"
+                  >
+                {% else %}
+                  <img
+                    src="{% static 'images/product1.jpg' %}"
+                    alt="{{ p.title }}"
+                  >
+                {% endif %}
+
+                <div class="product-title">
+                  {{ p.title }}
+                </div>
+
+                <div class="product-price">
+                  {{ p.price }} ₸
+                </div>
+
+                <div class="product-seller">
+                  {{ p.get_condition_display }}
+
+                  {% if p.city %}
+                    · {{ p.city }}
+                  {% endif %}
+                </div>
+
+              </a>
+
+            </article>
+          {% endfor %}
+
+        </div>
+
+      </div>
+    {% endif %}
+
     <div class="detail-section-card">
       <h2>Не нашли нужный вариант?</h2>
       <p>Оставьте заявку и получите предложения от продавцов</p>
