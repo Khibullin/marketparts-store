@@ -75,6 +75,32 @@ class SellerProfile(models.Model):
     phone = models.CharField(max_length=30, verbose_name='Телефон / WhatsApp')
     city = models.CharField(max_length=120, blank=True, default='', verbose_name='Город')
 
+    instagram = models.CharField(
+        max_length=255,
+        blank=True,
+        default='',
+        verbose_name='Instagram'
+    )
+
+    website = models.URLField(
+        blank=True,
+        default='',
+        verbose_name='Сайт'
+    )
+
+    description = models.TextField(
+        blank=True,
+        default='',
+        verbose_name='Описание магазина'
+    )
+
+    logo = models.ImageField(
+        upload_to='seller_logos/',
+        null=True,
+        blank=True,
+        verbose_name='Логотип магазина'
+    )
+
     class Meta:
         verbose_name = 'Профиль продавца'
         verbose_name_plural = 'Профили продавцов'

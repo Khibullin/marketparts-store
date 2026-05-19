@@ -19,7 +19,11 @@
       <h2>Редактировать профиль</h2>
       <p class="dashboard-subtitle">Обновите информацию о вашем магазине</p>
 
-      <form method="post" class="seller-form">
+      <form
+        method="post"
+        class="seller-form"
+        enctype="multipart/form-data"
+      >
         {% csrf_token %}
 
         <p>
@@ -35,6 +39,34 @@
         <p>
           <label for="{{ form.city.id_for_label }}">{{ form.city.label }}</label>
           {{ form.city }}
+        </p>
+
+        <p>
+          <label for="{{ form.instagram.id_for_label }}">
+            {{ form.instagram.label }}
+          </label>
+          {{ form.instagram }}
+        </p>
+
+        <p>
+          <label for="{{ form.website.id_for_label }}">
+            {{ form.website.label }}
+          </label>
+          {{ form.website }}
+        </p>
+
+        <p>
+          <label for="{{ form.description.id_for_label }}">
+            {{ form.description.label }}
+          </label>
+          {{ form.description }}
+        </p>
+
+        <p>
+          <label for="{{ form.logo.id_for_label }}">
+            {{ form.logo.label }}
+          </label>
+          {{ form.logo }}
         </p>
 
         <div class="form-action-row">

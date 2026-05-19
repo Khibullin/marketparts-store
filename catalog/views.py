@@ -209,7 +209,7 @@ def seller_profile_edit(request):
     old_name = seller.name
 
     if request.method == 'POST':
-        form = SellerProfileForm(request.POST, instance=seller)
+        form = SellerProfileForm(request.POST, request.FILES, instance=seller)
         if form.is_valid():
             updated_seller = form.save()
 

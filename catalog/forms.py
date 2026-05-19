@@ -9,21 +9,51 @@ class SellerRegisterForm(forms.ModelForm):
 
     class Meta:
         model = SellerProfile
-        fields = ['name', 'phone', 'city']
+
+        fields = [
+            'name',
+            'phone',
+            'city',
+            'instagram',
+            'website',
+            'description',
+            'logo',
+        ]
+
         labels = {
             'name': 'Название магазина',
             'phone': 'Телефон / WhatsApp',
             'city': 'Город',
+            'instagram': 'Instagram',
+            'website': 'Сайт',
+            'description': 'Описание магазина',
+            'logo': 'Логотип магазина',
         }
+
         widgets = {
             'name': forms.TextInput(attrs={
                 'placeholder': 'Например: Auto Parts Алматы'
             }),
+
             'phone': forms.TextInput(attrs={
                 'placeholder': 'Например: 77713607040'
             }),
+
             'city': forms.TextInput(attrs={
                 'placeholder': 'Например: Алматы'
+            }),
+
+            'instagram': forms.TextInput(attrs={
+                'placeholder': 'Например: instagram.com/autoparts_kz'
+            }),
+
+            'website': forms.URLInput(attrs={
+                'placeholder': 'Например: https://site.kz'
+            }),
+
+            'description': forms.Textarea(attrs={
+                'placeholder': 'Кратко расскажите о магазине',
+                'rows': 4
             }),
         }
 
@@ -31,24 +61,53 @@ class SellerRegisterForm(forms.ModelForm):
 class SellerProfileForm(forms.ModelForm):
     class Meta:
         model = SellerProfile
-        fields = ['name', 'phone', 'city']
+
+        fields = [
+            'name',
+            'phone',
+            'city',
+            'instagram',
+            'website',
+            'description',
+            'logo',
+        ]
+
         labels = {
             'name': 'Название магазина',
             'phone': 'Телефон / WhatsApp',
             'city': 'Город',
+            'instagram': 'Instagram',
+            'website': 'Сайт',
+            'description': 'Описание магазина',
+            'logo': 'Логотип магазина',
         }
+
         widgets = {
             'name': forms.TextInput(attrs={
                 'placeholder': 'Например: Auto Parts Алматы'
             }),
+
             'phone': forms.TextInput(attrs={
                 'placeholder': 'Например: 77713607040'
             }),
+
             'city': forms.TextInput(attrs={
                 'placeholder': 'Например: Алматы'
             }),
-        }
 
+            'instagram': forms.TextInput(attrs={
+                'placeholder': 'Например: instagram.com/autoparts_kz'
+            }),
+
+            'website': forms.URLInput(attrs={
+                'placeholder': 'Например: https://site.kz'
+            }),
+
+            'description': forms.Textarea(attrs={
+                'placeholder': 'Кратко расскажите о магазине',
+                'rows': 4
+            }),
+        }
 
 class ProductForm(forms.ModelForm):
     country = forms.ModelChoiceField(

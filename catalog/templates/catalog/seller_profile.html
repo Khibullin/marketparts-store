@@ -20,18 +20,64 @@
       <p class="dashboard-subtitle">Информация о вашем магазине</p>
 
       <div class="detail-grid">
-        <div class="detail-box">
-          <div class="detail-label">Название магазина</div>
-          <div class="detail-value">{{ seller.name }}</div>
+
+        <div class="detail-box" style="text-align:center;">
+          {% if seller.logo %}
+            <img
+              src="{{ seller.logo.url }}"
+              alt="{{ seller.name }}"
+              style="
+                width:120px;
+                height:120px;
+                object-fit:contain;
+                border-radius:20px;
+                background:#fff;
+                border:1px solid #eee;
+                padding:10px;
+              "
+            >
+          {% else %}
+            <img
+              src="{% static 'images/logo.jpg' %}"
+              alt="Logo"
+              style="
+                width:120px;
+                height:120px;
+                object-fit:contain;
+                border-radius:20px;
+                background:#fff;
+                border:1px solid #eee;
+                padding:10px;
+              "
+            >
+          {% endif %}
         </div>
 
         <div class="detail-box">
-          <div class="detail-label">Телефон / WhatsApp</div>
-          <div class="detail-value">{{ seller.phone }}</div>
+          <div class="detail-label">
+            Название магазина
+          </div>
+
+          <div class="detail-value">
+            {{ seller.name }}
+          </div>
         </div>
 
         <div class="detail-box">
-          <div class="detail-label">Город</div>
+          <div class="detail-label">
+            Телефон / WhatsApp
+          </div>
+
+          <div class="detail-value">
+            {{ seller.phone }}
+          </div>
+        </div>
+
+        <div class="detail-box">
+          <div class="detail-label">
+            Город
+          </div>
+
           <div class="detail-value">
             {% if seller.city %}
               {{ seller.city }}
@@ -41,10 +87,54 @@
           </div>
         </div>
 
+        {% if seller.instagram %}
         <div class="detail-box">
-          <div class="detail-label">Товаров в магазине</div>
-          <div class="detail-value">{{ products_count }}</div>
+          <div class="detail-label">
+            Instagram
+          </div>
+
+          <div class="detail-value">
+            {{ seller.instagram }}
+          </div>
         </div>
+        {% endif %}
+
+        {% if seller.website %}
+        <div class="detail-box">
+          <div class="detail-label">
+            Сайт
+          </div>
+
+          <div class="detail-value">
+            <a href="{{ seller.website }}" target="_blank">
+              {{ seller.website }}
+            </a>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if seller.description %}
+        <div class="detail-box">
+          <div class="detail-label">
+            Описание магазина
+          </div>
+
+          <div class="detail-value">
+            {{ seller.description }}
+          </div>
+        </div>
+        {% endif %}
+
+        <div class="detail-box">
+          <div class="detail-label">
+            Товаров в магазине
+          </div>
+
+          <div class="detail-value">
+            {{ products_count }}
+          </div>
+        </div>
+
       </div>
 
       <div class="form-action-row">
