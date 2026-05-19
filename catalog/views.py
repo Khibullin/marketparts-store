@@ -411,9 +411,65 @@ def load_brands(request):
     return JsonResponse(data, safe=False)
 
 
+def load_brands(request):
+    country_id = request.GET.get('country')
+    brands = Brand.objects.filter(
+        country_id=country_id
+    ).order_by('name')
+
+    data = [
+        {'id': b.id, 'name': b.name}
+        for b in brands
+    ]
+
+    return JsonResponse(data, safe=False)
+
+
 def load_models(request):
     brand_id = request.GET.get('brand')
-    models = CarModel.objects.filter(brand_id=brand_id).order_by('name')
 
-    data = [{'id': m.id, 'name': m.name} for m in models]
+    models = CarModel.objects.filter(
+        brand_id=brand_id
+    ).order_by('name')
+
+    data = [
+        {'id': m.id, 'name': m.name}
+        for m in models
+    ]
+
     return JsonResponse(data, safe=False)
+
+
+def public_seller_profile(request, seller_id):
+    seller = get_object_or_404(
+        SellerProfile,
+        pk=seller_id
+    )
+
+    products = Product.objects.filter(
+        whatsapp_number=seller.phone,
+        status='active'
+    ).order_by('-created_at')
+
+    return render(
+        request,
+        'catalog/public_seller_profile.html',
+        {
+            'seller': seller,
+            'products': products,
+        }
+    )
+
+    products = Product.objects.filter(
+        seller_name=seller.name,
+        status='active'
+    ).order_by('-created_at')
+
+    return render(
+        request,
+        'catalog/public_seller_profile.html',
+        {
+            'seller': seller,
+            'products': products,
+        }
+    )

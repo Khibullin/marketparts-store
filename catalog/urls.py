@@ -10,6 +10,7 @@ from .views import (
     seller_profile_edit,
     seller_profile_delete,
     seller_change_password,
+    public_seller_profile,
     add_product,
     edit_product,
     delete_product,
@@ -20,6 +21,12 @@ from .views import (
 urlpatterns = [
     path('', catalog_list, name='catalog_list'),
     path('<int:pk>/', product_detail, name='product_detail'),
+
+    path(
+        'seller/<int:seller_id>/',
+        public_seller_profile,
+        name='public_seller_profile'
+    ),
 
     path('seller/register/', seller_register, name='seller_register'),
     path('seller/login/', seller_login, name='seller_login'),

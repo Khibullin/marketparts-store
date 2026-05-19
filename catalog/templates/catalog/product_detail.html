@@ -200,6 +200,18 @@
                 {{ seller.description }}
               </div>
             {% endif %}
+
+            <div style="margin-top:18px;">
+
+              <a
+                href="{% url 'public_seller_profile' seller.id %}"
+                class="btn outline"
+              >
+                Смотреть профиль продавца
+              </a>
+
+            </div>
+
           </div>
         </div>
       </div>
