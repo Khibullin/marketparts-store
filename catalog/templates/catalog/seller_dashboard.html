@@ -40,18 +40,12 @@
                 <img
                   src="{{ product.main_image.url }}"
                   alt="{{ product.title }}"
-                  {% if product.images.first %}
-                    onerror="this.onerror=null;this.src='{{ product.images.first.image.url }}';"
-                  {% else %}
-                    onerror="this.onerror=null;this.src='{% static 'images/product1.jpg' %}';"
-                  {% endif %}
                 >
 
               {% elif product.images.first %}
                 <img
                   src="{{ product.images.first.image.url }}"
                   alt="{{ product.title }}"
-                  onerror="this.onerror=null;this.src='{% static 'images/product1.jpg' %}';"
                 >
 
               {% else %}
@@ -60,19 +54,6 @@
                   alt="{{ product.title }}"
                 >
               {% endif %}
-                >
-
-              {% elif product.images.first %}
-                <img
-                  src="{{ product.images.first.image.url }}"
-                  alt="{{ product.title }}"
-                  onerror="this.onerror=null;this.src='{% static 'images/product1.jpg' %}';"
-                >
-
-              {% else %}
-                <img src="{% static 'images/product1.jpg' %}" alt="{{ product.title }}">
-              {% endif %}
-
               {% if product.brand or product.car_model %}
                 <div class="product-seller">
                   {% if product.brand %}{{ product.brand.name }}{% endif %}
@@ -87,10 +68,14 @@
               </div>
 
               <div class="dashboard-card-actions">
-                <a href="{% url 'edit_product' product.pk %}" class="btn outline small-btn">Редактировать</a>
-                <a href="{% url 'delete_product' product.pk %}" class="btn danger small-btn">Удалить</a>
+                <a href="{% url 'edit_product' product.pk %}" class="btn outline small-btn">
+                  Редактировать
+                </a>
+
+                <a href="{% url 'delete_product' product.pk %}" class="btn danger small-btn">
+                  Удалить
+                </a>
               </div>
-            </div>
           </article>
         {% endfor %}
       </div>

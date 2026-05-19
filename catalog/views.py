@@ -231,13 +231,25 @@ def add_product(request):
 
         if form.is_valid():
             product = form.save(commit=False)
+
             product.seller_name = seller.name
             product.whatsapp_number = seller.phone
             product.city = seller.city
+
             product.save()
 
+            uploaded_images = []
+
             for f in files[:4]:
-                ProductImage.objects.create(product=product, image=f)
+                img = ProductImage.objects.create(
+                    product=product,
+                    image=f
+                )
+                uploaded_images.append(img)
+
+            if not product.main_image and uploaded_images:
+                product.main_image = uploaded_images[0].image
+                product.save(update_fields=['main_image'])
 
             return redirect('seller_dashboard')
     else:
@@ -270,6 +282,7 @@ def edit_product(request, pk):
             if request.POST.get('remove_main_image'):
                 if product.main_image:
                     product.main_image.delete(save=False)
+
                 updated_product.main_image = None
 
             if request.POST.get('remove_extra_images'):
@@ -280,7 +293,10 @@ def edit_product(request, pk):
             updated_product.seller_name = seller.name
             updated_product.whatsapp_number = seller.phone
             updated_product.city = seller.city
+
             updated_product.save()
+
+            uploaded_images = []
 
             if files:
                 for img in product.images.all():
@@ -288,7 +304,18 @@ def edit_product(request, pk):
                     img.delete()
 
                 for f in files[:4]:
-                    ProductImage.objects.create(product=updated_product, image=f)
+                    img = ProductImage.objects.create(
+                        product=updated_product,
+                        image=f
+                    )
+                    uploaded_images.append(img)
+
+            if not updated_product.main_image:
+                first_image = updated_product.images.first()
+
+                if first_image:
+                    updated_product.main_image = first_image.image
+                    updated_product.save(update_fields=['main_image'])
 
             return redirect('seller_dashboard')
     else:
@@ -301,7 +328,6 @@ def edit_product(request, pk):
         'page_title': 'Редактировать товар',
         'submit_text': 'Сохранить изменения',
     })
-
 
 @login_required
 def delete_product(request, pk):
