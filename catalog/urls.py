@@ -9,6 +9,7 @@ from .views import (
     seller_profile,
     seller_profile_edit,
     seller_profile_delete,
+    seller_change_password,
     add_product,
     edit_product,
     delete_product,
@@ -26,6 +27,11 @@ urlpatterns = [
     path('seller/dashboard/', seller_dashboard, name='seller_dashboard'),
     path('seller/profile/', seller_profile, name='seller_profile'),
     path('seller/profile/edit/', seller_profile_edit, name='seller_profile_edit'),
+    path(
+        'seller/profile/change-password/',
+        seller_change_password,
+        name='seller_change_password'
+    ),
     path('seller/profile/delete/', seller_profile_delete, name='seller_profile_delete'),
 
     path('seller/add/', add_product, name='add_product'),

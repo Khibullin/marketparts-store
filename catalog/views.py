@@ -1,6 +1,6 @@
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import JsonResponse
@@ -171,6 +171,37 @@ def seller_profile(request):
         'products_count': products_count,
     })
 
+@login_required
+def seller_change_password(request):
+    seller = get_object_or_404(SellerProfile, user=request.user)
+    error_message = None
+    success_message = None
+
+    if request.method == 'POST':
+        current_password = request.POST.get('current_password', '').strip()
+        new_password = request.POST.get('new_password', '').strip()
+        confirm_password = request.POST.get('confirm_password', '').strip()
+
+        if not request.user.check_password(current_password):
+            error_message = 'Текущий пароль указан неверно.'
+
+        elif not new_password:
+            error_message = 'Введите новый пароль.'
+
+        elif new_password != confirm_password:
+            error_message = 'Новый пароль и подтверждение не совпадают.'
+
+        else:
+            request.user.set_password(new_password)
+            request.user.save()
+            update_session_auth_hash(request, request.user)
+            success_message = 'Пароль успешно изменён.'
+
+    return render(request, 'catalog/seller_change_password.html', {
+        'seller': seller,
+        'error_message': error_message,
+        'success_message': success_message,
+    })
 
 @login_required
 def seller_profile_edit(request):
