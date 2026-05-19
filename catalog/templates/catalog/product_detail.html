@@ -323,13 +323,49 @@
     <div class="detail-section-card">
       <h2>Не нашли нужный вариант?</h2>
       <p>Оставьте заявку и получите предложения от продавцов</p>
-      <div class="form-action-row">
-        <a class="btn white" href="https://marketparts.kz" target="_blank" rel="noopener noreferrer">
+      <div style="
+        display:flex;
+        gap:14px;
+        flex-wrap:wrap;
+        margin-top:18px;
+      ">
+
+        <a
+          href="https://zpt.kz/request-parts/"
+          style="
+            background:#ef4438;
+            color:#fff;
+            padding:14px 26px;
+            border-radius:14px;
+            text-decoration:none;
+            font-weight:700;
+            box-shadow:0 8px 20px rgba(239,68,56,.18);
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+          "
+        >
           Оставить заявку
         </a>
-        <a class="btn outline" href="{% url 'catalog_list' %}">
+
+        <a
+          href="{% url 'catalog_list' %}"
+          style="
+            background:#fff;
+            color:#111827;
+            padding:14px 26px;
+            border-radius:14px;
+            text-decoration:none;
+            font-weight:700;
+            border:1px solid #e5e7eb;
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+          "
+        >
           Назад в магазин
         </a>
+
       </div>
     </div>
   </div>
