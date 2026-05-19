@@ -89,9 +89,37 @@ def catalog_list(request):
 
 
 def product_detail(request, pk):
-    product = get_object_or_404(Product, pk=pk, status='active')
+    product = get_object_or_404(
+        Product,
+        pk=pk,
+        status='active'
+    )
+
+    seller = None
+
+    if product.whatsapp_number:
+        clean_phone = ''.join(
+            filter(str.isdigit, product.whatsapp_number)
+        )
+
+        seller = SellerProfile.objects.filter(
+            phone__icontains=clean_phone[-10:]
+        ).first()
+
+    if not seller and product.seller_name:
+        seller = SellerProfile.objects.filter(
+            name__iexact=product.seller_name.strip()
+        ).first()
+
+    seller_products = Product.objects.filter(
+        seller_name=product.seller_name,
+        status='active'
+    ).exclude(pk=product.pk)[:8]
+
     return render(request, 'catalog/product_detail.html', {
-        'product': product
+        'product': product,
+        'seller': seller,
+        'seller_products': seller_products,
     })
 
 
