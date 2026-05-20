@@ -4,11 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>{% block title %}Market Parts{% endblock %}</title>
-    <link rel="icon" href="{% static 'images/favicon.ico' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{% static 'images/favicon.ico' %}?v=3"
+    >
+
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="{% static 'images/favicon.ico' %}?v=3"
+    >
+
+    <link
+      rel="apple-touch-icon"
+      href="{% static 'images/apple-touch-icon.png' %}?v=3"
+    >
+
+    <link
+      rel="stylesheet"
+      href="{% static 'css/style.css' %}"
+    >
 </head>
-<body>
-{% block content %}{% endblock %}
-</body>
-</html>
