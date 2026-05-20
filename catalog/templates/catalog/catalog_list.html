@@ -27,17 +27,20 @@ body{
 }
 
 .brand{
-  display:flex;
+  display:inline-flex;
   align-items:center;
-  gap:12px;
   text-decoration:none;
+  padding:0;
+  margin:0;
 }
 
 .brand img{
   height:38px;
   width:auto;
+  max-width:none;
   object-fit:contain;
   display:block;
+  border-radius:0;
 }
 
 .brand-title{
@@ -401,10 +404,12 @@ body{
   }
 
   .brand img{
-    height:32px;
+    height:30px;
     width:auto;
+    max-width:none;
     object-fit:contain;
     display:block;
+    border-radius:0;
   }
 
   .brand-title{
