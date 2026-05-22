@@ -1,15 +1,45 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Кабинет продавца — Market Parts{% endblock %}
+{% block title %}Кабинет продавца — ZPT.KZ{% endblock %}
 
 {% block content %}
 <header class="topbar">
   <div class="container topbar-inner">
-    <a class="brand" href="/">
-      <img src="{% static 'images/logo.jpg' %}" alt="Market Parts">
-      <div class="brand-title">Market <span>Parts</span></div>
+
+    <a
+      class="brand"
+      href="https://zpt.kz/"
+    >
+      <img
+        src="{% static 'images/logo.png' %}"
+        alt="ZPT.KZ"
+      >
     </a>
+
+    <div class="dashboard-actions">
+      <a
+        href="{% url 'seller_profile' %}"
+        class="btn outline"
+      >
+        Профиль
+      </a>
+
+      <a
+        href="{% url 'add_product' %}"
+        class="btn red"
+      >
+        Добавить товар
+      </a>
+
+      <a
+        href="{% url 'seller_logout' %}"
+        class="btn outline"
+      >
+        Выйти
+      </a>
+    </div>
+
   </div>
 </header>
 
@@ -22,12 +52,6 @@
           {{ seller.name }} · {{ seller.phone }}
           {% if seller.city %} · {{ seller.city }}{% endif %}
         </p>
-      </div>
-
-      <div class="dashboard-actions">
-        <a href="{% url 'seller_profile' %}" class="btn outline">Профиль</a>
-        <a href="{% url 'add_product' %}" class="btn red">Добавить товар</a>
-        <a href="{% url 'seller_logout' %}" class="btn outline">Выйти</a>
       </div>
     </div>
 
@@ -76,6 +100,8 @@
                   Удалить
                 </a>
               </div>
+
+            </a>
           </article>
         {% endfor %}
       </div>
