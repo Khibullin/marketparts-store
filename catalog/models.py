@@ -163,6 +163,20 @@ class Product(models.Model):
         verbose_name='Модель'
     )
 
+    selected_brands = models.ManyToManyField(
+        Brand,
+        blank=True,
+        related_name='multi_products',
+        verbose_name='Марки товара'
+    )
+
+    selected_models = models.ManyToManyField(
+        CarModel,
+        blank=True,
+        related_name='multi_products',
+        verbose_name='Модели товара'
+    )
+
     category = models.ForeignKey(
         Category,
         on_delete=models.SET_NULL,
