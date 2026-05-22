@@ -116,12 +116,21 @@ class ProductForm(forms.ModelForm):
         label='Страна'
     )
 
+
+    selected_models = forms.ModelMultipleChoiceField(
+        queryset=CarModel.objects.none(),
+        required=False,
+        label='Дополнительно подходит к моделям',
+        widget=forms.CheckboxSelectMultiple
+    )
+
     class Meta:
         model = Product
         fields = [
             'country',
             'brand',
             'car_model',
+            'selected_models',
             'category',
             'title',
             'article',
@@ -136,6 +145,7 @@ class ProductForm(forms.ModelForm):
             'country': 'Страна',
             'brand': 'Марка',
             'car_model': 'Модель',
+            'selected_models': 'Дополнительно подходит к моделям',
             'category': 'Категория',
             'title': 'Название товара',
             'article': 'Артикул',
@@ -198,3 +208,11 @@ class ProductForm(forms.ModelForm):
             self.fields['car_model'].queryset = CarModel.objects.filter(
                 brand_id=brand_id
             ).order_by('name')
+
+
+        if brand_id:
+            self.fields['selected_models'].queryset = CarModel.objects.filter(
+                brand_id=brand_id
+            ).order_by('name')
+        else:
+            self.fields['selected_models'].queryset = CarModel.objects.none()

@@ -16,6 +16,7 @@ from .views import (
     delete_product,
     load_brands,
     load_models,
+    load_compatible_models,
 )
 
 urlpatterns = [
@@ -47,4 +48,10 @@ urlpatterns = [
 
     path('ajax/load-brands/', load_brands, name='ajax_load_brands'),
     path('ajax/load-models/', load_models, name='ajax_load_models'),
+
+    path(
+        'ajax/load-compatible-models/',
+        load_compatible_models,
+        name='ajax_load_compatible_models'
+    ),
 ]

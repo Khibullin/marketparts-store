@@ -2,16 +2,55 @@
 {% load static %}
 
 {% block title %}
-  {% if page_title %}{{ page_title }}{% else %}Добавить товар{% endif %} — Market Parts
+  {% if page_title %}{{ page_title }}{% else %}Добавить товар{% endif %} — ZPT.KZ
 {% endblock %}
 
 {% block content %}
+<style>
+.brand img{
+  height:38px;
+  width:auto;
+  max-width:none;
+  object-fit:contain;
+  display:block;
+  border-radius:0;
+}
+.checkbox-group{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:8px;
+  margin-top:8px;
+}
+
+.checkbox-group label{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 10px;
+  border:1px solid #e5e5e5;
+  border-radius:10px;
+  background:#fff;
+  font-size:14px;
+}
+
+.checkbox-group input{
+  width:auto;
+  margin:0;
+}
+</style>
 <header class="topbar">
   <div class="container topbar-inner">
-    <a class="brand" href="/">
-      <img src="{% static 'images/logo.jpg' %}" alt="Market Parts">
-      <div class="brand-title">Market <span>Parts</span></div>
+
+    <a
+      class="brand"
+      href="https://zpt.kz/"
+    >
+      <img
+        src="{% static 'images/logo.png' %}"
+        alt="ZPT.KZ"
+      >
     </a>
+
   </div>
 </header>
 
@@ -46,6 +85,16 @@
         <p>
           <label for="{{ form.car_model.id_for_label }}">{{ form.car_model.label }}</label>
           {{ form.car_model }}
+        </p>
+
+        <p>
+          <label>
+            {{ form.selected_models.label }}
+          </label>
+
+          <div class="checkbox-group">
+            {{ form.selected_models }}
+          </div>
         </p>
 
         <p>
@@ -148,6 +197,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const countrySelect = document.getElementById("id_country");
     const brandSelect = document.getElementById("id_brand");
     const modelSelect = document.getElementById("id_car_model");
+    const compatibleModelsBox = document.getElementById("id_selected_models");
+    let currentModelsData = [];
 
     if (countrySelect) {
         countrySelect.addEventListener("change", function () {
@@ -184,11 +235,75 @@ document.addEventListener("DOMContentLoaded", function () {
             fetch(`/catalog/ajax/load-models/?brand=${brandId}`)
                 .then(response => response.json())
                 .then(data => {
-                    modelSelect.innerHTML = '<option value="">Выберите модель</option>';
+
+                    modelSelect.innerHTML =
+                        '<option value="">Выберите модель</option>';
+
                     data.forEach(item => {
-                        modelSelect.innerHTML += `<option value="${item.id}">${item.name}</option>`;
+                        modelSelect.innerHTML += `
+                            <option value="${item.id}">
+                                ${item.name}
+                            </option>
+                        `;
                     });
+
                 });
+
+            fetch(`/catalog/ajax/load-compatible-models/?brand=${brandId}`)
+                .then(response => response.json())
+                .then(data => {
+
+                    currentModelsData = data;
+
+                    compatibleModelsBox.innerHTML = '';
+
+                    data
+                        .filter(item =>
+                            String(item.id) !==
+                            String(modelSelect.value)
+                        )
+                        .forEach(item => {
+
+                            compatibleModelsBox.innerHTML += `
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        name="selected_models"
+                                        value="${item.id}"
+                                    >
+                                    ${item.name}
+                                </label>
+                            `;
+
+                        });
+
+                });
+        });
+
+        modelSelect.addEventListener("change", function () {
+
+            compatibleModelsBox.innerHTML = '';
+
+            currentModelsData
+                .filter(item =>
+                    String(item.id) !==
+                    String(modelSelect.value)
+                )
+                .forEach(item => {
+
+                    compatibleModelsBox.innerHTML += `
+                        <label>
+                            <input
+                                type="checkbox"
+                                name="selected_models"
+                                value="${item.id}"
+                            >
+                            ${item.name}
+                        </label>
+                    `;
+
+                });
+
         });
     }
 });
