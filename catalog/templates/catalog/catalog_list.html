@@ -171,7 +171,7 @@ body{
 
 .filter-grid{
   display:grid;
-  grid-template-columns:1fr 1fr 1fr;
+  grid-template-columns:1fr 1fr 1fr 1fr;
   gap:10px;
 }
 
@@ -608,36 +608,35 @@ body{
             Подбор запчастей
           </div>
 
-          <div class="filter-grid">
+<div class="filter-grid">
 
-            <select id="brand" name="brand">
-              <option value="">Марка</option>
-              {% for brand in brands %}
-                <option value="{{ brand.id }}">
-                  {{ brand.name }}
-                </option>
-              {% endfor %}
-            </select>
+  <select id="country" name="country">
+    <option value="">Страна</option>
+    {% for country in countries %}
+      <option value="{{ country.id }}">
+        {{ country.name }}
+      </option>
+    {% endfor %}
+  </select>
 
-            <select id="model" name="model">
-              <option value="">Модель</option>
-              {% for model in models %}
-                <option value="{{ model.id }}">
-                  {{ model.name }}
-                </option>
-              {% endfor %}
-            </select>
+  <select id="brand" name="brand">
+    <option value="">Марка</option>
+  </select>
 
-            <select id="category" name="category">
-              <option value="">Категория запчасти</option>
-              {% for category in categories %}
-                <option value="{{ category.id }}">
-                  {{ category.name }}
-                </option>
-              {% endfor %}
-            </select>
+  <select id="model" name="model">
+    <option value="">Модель</option>
+  </select>
 
-          </div>
+  <select id="category" name="category">
+    <option value="">Категория запчасти</option>
+    {% for category in categories %}
+      <option value="{{ category.id }}">
+        {{ category.name }}
+      </option>
+    {% endfor %}
+  </select>
+
+</div>
 
         </div>
 
@@ -775,5 +774,70 @@ body{
   </footer>
 
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  const country = document.getElementById('country');
+  const brand = document.getElementById('brand');
+  const model = document.getElementById('model');
+
+  if (!country || !brand || !model) return;
+
+  country.addEventListener('change', function () {
+
+    brand.innerHTML =
+      '<option value="">Марка</option>';
+
+    model.innerHTML =
+      '<option value="">Модель</option>';
+
+    if (!this.value) return;
+
+    fetch(`/catalog/ajax/load-brands/?country=${this.value}`)
+      .then(response => response.json())
+      .then(data => {
+
+        data.forEach(item => {
+
+          brand.innerHTML += `
+            <option value="${item.id}">
+              ${item.name}
+            </option>
+          `;
+
+        });
+
+      });
+
+  });
+
+  brand.addEventListener('change', function () {
+
+    model.innerHTML =
+      '<option value="">Модель</option>';
+
+    if (!this.value) return;
+
+    fetch(`/catalog/ajax/load-models/?brand=${this.value}`)
+      .then(response => response.json())
+      .then(data => {
+
+        data.forEach(item => {
+
+          model.innerHTML += `
+            <option value="${item.id}">
+              ${item.name}
+            </option>
+          `;
+
+        });
+
+      });
+
+  });
+
+});
+</script>
 
 {% endblock %}
