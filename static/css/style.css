@@ -65,11 +65,13 @@ a {
 }
 
 .brand img {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  object-fit: cover;
-  background: #fff;
+  height: 38px;
+  width: auto;
+  max-width: none;
+  border-radius: 0;
+  object-fit: contain;
+  background: transparent;
+  display: block;
   flex: 0 0 auto;
 }
 
@@ -768,10 +770,13 @@ footer {
     padding: 16px 0;
   }
 
-  .brand img {
-    width: 42px;
-    height: 42px;
-  }
+.brand img {
+  height: 42px;
+  width: auto;
+  max-width: none;
+  border-radius: 0;
+  object-fit: contain;
+}
 
   .brand-title {
     font-size: 28px;
