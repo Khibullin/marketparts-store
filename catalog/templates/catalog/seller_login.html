@@ -62,10 +62,31 @@
         <button type="submit" class="btn red">Войти</button>
       </form>
 
-      <p class="form-note">
-        Нет аккаунта?
-        <a href="{% url 'seller_register' %}">Зарегистрироваться</a>
-      </p>
+<div
+  class="register-box"
+  style="
+    margin-top:18px;
+    padding-top:14px;
+    border-top:1px solid #ececec;
+    text-align:center;
+    font-size:15px;
+    color:#666;
+  "
+>
+  Нет аккаунта?
+
+  <a
+    href="{% url 'seller_register' %}"
+    style="
+      color:#ef3e2f;
+      font-weight:700;
+      text-decoration:none;
+      margin-left:4px;
+    "
+  >
+    Зарегистрироваться →
+  </a>
+</div>
     </div>
   </div>
 </section>
