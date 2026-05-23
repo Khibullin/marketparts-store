@@ -1,25 +1,66 @@
 from django.contrib import admin
-from .models import Country, Brand, CarModel, Category, Product, SellerProfile, ProductImage
+from .models import (
+    Country,
+    Brand,
+    CarModel,
+    Category,
+    Product,
+    SellerProfile,
+    ProductImage,
+)
+
+
+admin.site.site_header = 'Администрирование ZPT Store'
+admin.site.site_title = 'ZPT Store'
+admin.site.index_title = 'Панель управления магазином'
 
 
 @admin.register(Country)
 class CountryAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
     search_fields = ('name',)
+    ordering = ('name',)
 
 
 @admin.register(Brand)
 class BrandAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'country')
+    list_display = (
+        'id',
+        'name',
+        'country',
+    )
+
     list_filter = ('country',)
-    search_fields = ('name', 'country__name')
+
+    search_fields = (
+        'name',
+        'country__name',
+    )
+
+    ordering = ('name',)
 
 
 @admin.register(CarModel)
 class CarModelAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'brand', 'get_country')
-    list_filter = ('brand__country', 'brand')
-    search_fields = ('name', 'brand__name', 'brand__country__name')
+    list_display = (
+        'id',
+        'name',
+        'brand',
+        'get_country',
+    )
+
+    list_filter = (
+        'brand__country',
+        'brand',
+    )
+
+    search_fields = (
+        'name',
+        'brand__name',
+        'brand__country__name',
+    )
+
+    ordering = ('name',)
 
     def get_country(self, obj):
         return obj.brand.country.name
@@ -28,20 +69,49 @@ class CarModelAdmin(admin.ModelAdmin):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name')
+    list_display = (
+        'id',
+        'name',
+    )
+
     search_fields = ('name',)
+    ordering = ('name',)
 
 
 @admin.register(SellerProfile)
 class SellerProfileAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'phone', 'user')
-    search_fields = ('name', 'phone', 'user__username')
+    list_display = (
+        'id',
+        'name',
+        'phone',
+        'city',
+        'user',
+    )
+
+    search_fields = (
+        'name',
+        'phone',
+        'city',
+        'user__username',
+    )
+
+    list_filter = ('city',)
+
+    ordering = ('name',)
 
 
 @admin.register(ProductImage)
 class ProductImageAdmin(admin.ModelAdmin):
-    list_display = ('id', 'product', 'image')
-    search_fields = ('product__title', 'product__article')
+    list_display = (
+        'id',
+        'product',
+        'image',
+    )
+
+    search_fields = (
+        'product__title',
+        'product__article',
+    )
 
 
 @admin.register(Product)
@@ -52,6 +122,8 @@ class ProductAdmin(admin.ModelAdmin):
         'article',
         'price',
         'seller_name',
+        'whatsapp_number',
+        'city',
         'brand',
         'car_model',
         'category',
@@ -59,5 +131,88 @@ class ProductAdmin(admin.ModelAdmin):
         'status',
         'created_at',
     )
-    list_filter = ('status', 'condition', 'brand__country', 'brand', 'category')
-    search_fields = ('title', 'article', 'seller_name', 'description', 'compatibility')
+
+    list_filter = (
+        'status',
+        'condition',
+        'brand__country',
+        'brand',
+        'car_model',
+        'category',
+        'city',
+    )
+
+    search_fields = (
+        'title',
+        'article',
+        'seller_name',
+        'whatsapp_number',
+        'description',
+        'compatibility',
+    )
+
+    readonly_fields = (
+        'created_at',
+    )
+
+    ordering = (
+        '-created_at',
+    )
+
+    fieldsets = (
+        (
+            'Основная информация',
+            {
+                'fields': (
+                    'title',
+                    'article',
+                    'category',
+                    'price',
+                    'condition',
+                    'status',
+                )
+            }
+        ),
+
+        (
+            'Автомобиль',
+            {
+                'fields': (
+                    'brand',
+                    'car_model',
+                    'selected_models',
+                    'compatibility',
+                )
+            }
+        ),
+
+        (
+            'Продавец',
+            {
+                'fields': (
+                    'seller_name',
+                    'whatsapp_number',
+                    'city',
+                )
+            }
+        ),
+
+        (
+            'Описание и фото',
+            {
+                'fields': (
+                    'description',
+                    'main_image',
+                )
+            }
+        ),
+
+        (
+            'Системная информация',
+            {
+                'fields': (
+                    'created_at',
+                )
+            }
+        ),
+    )
