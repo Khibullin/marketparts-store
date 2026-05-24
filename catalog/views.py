@@ -127,21 +127,29 @@ def seller_register(request):
     error_message = None
 
     if request.method == 'POST':
-        form = SellerRegisterForm(request.POST)
+        form = SellerRegisterForm(request.POST, request.FILES)
         if form.is_valid():
-            username = form.cleaned_data['username']
+            phone = ''.join(filter(str.isdigit, form.cleaned_data['phone']))
+            username = phone
             password = form.cleaned_data['password']
 
             if User.objects.filter(username=username).exists():
-                error_message = 'Пользователь с таким логином уже существует.'
+                error_message = 'Пользователь с таким WhatsApp уже существует.'
             else:
-                user = User.objects.create_user(username=username, password=password)
+                user = User.objects.create_user(
+                    username=username,
+                    password=password
+                )
 
                 SellerProfile.objects.create(
                     user=user,
                     name=form.cleaned_data['name'],
-                    phone=form.cleaned_data['phone'],
-                    city=form.cleaned_data.get('city', '')
+                    phone=phone,
+                    city=form.cleaned_data.get('city', ''),
+                    instagram=form.cleaned_data.get('instagram', ''),
+                    website=form.cleaned_data.get('website', ''),
+                    description=form.cleaned_data.get('description', ''),
+                    logo=form.cleaned_data.get('logo')
                 )
 
                 return redirect('seller_login')
@@ -152,7 +160,6 @@ def seller_register(request):
         'form': form,
         'error_message': error_message,
     })
-
 
 def seller_login(request):
     error_message = None

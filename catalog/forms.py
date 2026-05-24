@@ -4,7 +4,6 @@ from .models import SellerProfile, Product, Country, Brand, CarModel
 
 
 class SellerRegisterForm(forms.ModelForm):
-    username = forms.CharField(label='Логин')
     password = forms.CharField(widget=forms.PasswordInput, label='Пароль')
 
     class Meta:
