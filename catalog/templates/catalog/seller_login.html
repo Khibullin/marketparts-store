@@ -29,12 +29,26 @@
         <div class="form-error">{{ error_message }}</div>
       {% endif %}
 
-      <form method="post" class="seller-form">
+      <form method="post" class="seller-form" autocomplete="off">
         {% csrf_token %}
 
         <p>
-          <label for="username">Логин</label>
-          <input type="text" id="username" name="username" required>
+          <label for="username">
+            WhatsApp / Логин
+          </label>
+
+          <input
+            type="text"
+            id="username"
+            name="username"
+            required
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+            placeholder="77713607040"
+            value=""
+          >
         </p>
 
         <p>
@@ -47,6 +61,8 @@
             id="password"
             name="password"
             required
+            autocomplete="new-password"
+            value=""
           >
 
           <label style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:14px;font-weight:400;color:#555;">
