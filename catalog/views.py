@@ -161,6 +161,7 @@ def seller_register(request):
         'error_message': error_message,
     })
 
+
 def seller_login(request):
     error_message = None
 
@@ -206,6 +207,7 @@ def seller_profile(request):
         'products_count': products_count,
     })
 
+
 @login_required
 def seller_change_password(request):
     seller = get_object_or_404(SellerProfile, user=request.user)
@@ -237,6 +239,7 @@ def seller_change_password(request):
         'error_message': error_message,
         'success_message': success_message,
     })
+
 
 @login_required
 def seller_profile_edit(request):
@@ -395,6 +398,7 @@ def edit_product(request, pk):
         'submit_text': 'Сохранить изменения',
     })
 
+
 @login_required
 def delete_product(request, pk):
     seller = get_object_or_404(SellerProfile, user=request.user)
@@ -408,14 +412,6 @@ def delete_product(request, pk):
         'seller': seller,
         'product': product,
     })
-
-
-def load_brands(request):
-    country_id = request.GET.get('country')
-    brands = Brand.objects.filter(country_id=country_id).order_by('name')
-
-    data = [{'id': b.id, 'name': b.name} for b in brands]
-    return JsonResponse(data, safe=False)
 
 
 def load_brands(request):
@@ -469,20 +465,6 @@ def public_seller_profile(request, seller_id):
     seller = get_object_or_404(
         SellerProfile,
         pk=seller_id
-    )
-
-    products = Product.objects.filter(
-        whatsapp_number=seller.phone,
-        status='active'
-    ).order_by('-created_at')
-
-    return render(
-        request,
-        'catalog/public_seller_profile.html',
-        {
-            'seller': seller,
-            'products': products,
-        }
     )
 
     products = Product.objects.filter(
