@@ -1,189 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{ seller.name }} — продавец ZPT.KZ{% endblock %}
+{% block title %}{{ seller.name }} — продавец Market Parts{% endblock %}
 
 {% block content %}
-
-<style>
-.seller-card{
-  max-width:1000px;
-  margin:0 auto 28px;
-  background:#fff;
-  border-radius:28px;
-  padding:28px;
-  box-shadow:0 10px 30px rgba(0,0,0,.06);
-  border:1px solid #eee;
-}
-
-.seller-top{
-  display:flex;
-  gap:24px;
-  align-items:flex-start;
-  flex-wrap:wrap;
-}
-
-.seller-logo{
-  width:140px;
-  height:140px;
-  border-radius:26px;
-  border:1px solid #eee;
-  background:#fff;
-  overflow:hidden;
-  flex-shrink:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.seller-logo img{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  padding:14px;
-  box-sizing:border-box;
-}
-
-.seller-info{
-  flex:1;
-  min-width:260px;
-}
-
-.seller-name{
-  font-size:42px;
-  font-weight:800;
-  margin:0 0 12px;
-  line-height:1.1;
-}
-
-.seller-meta{
-  font-size:18px;
-  margin:10px 0;
-  color:#444;
-}
-
-.seller-description{
-  margin-top:16px;
-  line-height:1.7;
-  color:#666;
-}
-
-.whatsapp-btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  margin-top:18px;
-  padding:14px 24px;
-  border-radius:16px;
-  background:#22c55e;
-  color:#fff;
-  font-weight:700;
-  text-decoration:none;
-  transition:.2s;
-}
-
-.whatsapp-btn:hover{
-  transform:translateY(-2px);
-}
-
-.products-section{
-  max-width:1000px;
-  margin:0 auto;
-  background:#fff;
-  border-radius:28px;
-  padding:28px;
-  box-shadow:0 10px 30px rgba(0,0,0,.06);
-  border:1px solid #eee;
-}
-
-.products-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
-  gap:24px;
-  margin-top:24px;
-}
-
-.product-card{
-  border:1px solid #eee;
-  border-radius:22px;
-  overflow:hidden;
-  background:#fff;
-  transition:.2s;
-}
-
-.product-card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 10px 25px rgba(0,0,0,.08);
-}
-
-.product-link{
-  text-decoration:none;
-  color:inherit;
-  display:block;
-}
-
-.product-image-box{
-  width:100%;
-  aspect-ratio:1/1;
-  background:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:16px;
-  box-sizing:border-box;
-}
-
-.product-image-box img{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-}
-
-.product-content{
-  padding:18px;
-}
-
-.product-title{
-  font-size:20px;
-  font-weight:700;
-  margin-bottom:12px;
-  min-height:48px;
-}
-
-.product-price{
-  font-size:34px;
-  font-weight:800;
-  margin-bottom:12px;
-}
-
-.product-meta{
-  color:#666;
-  font-size:15px;
-}
-
-.back-row{
-  max-width:1000px;
-  margin:24px auto 0;
-}
-
-@media(max-width:768px){
-  .seller-name{
-    font-size:32px;
-  }
-
-  .seller-card,
-  .products-section{
-    padding:20px;
-    border-radius:22px;
-  }
-
-  .seller-logo{
-    width:110px;
-    height:110px;
-  }
-}
-</style>
-
 <header class="topbar">
   <div class="container topbar-inner">
     <a
@@ -207,166 +27,86 @@
 <section class="section">
   <div class="container">
 
-    <div class="seller-card">
+    <div class="seller-page-card" style="max-width:820px;margin:0 auto 24px;">
 
-      <div class="seller-top">
-
-        <div class="seller-logo">
+      <div style="display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap;">
+        <div style="width:110px;height:110px;border-radius:22px;border:1px solid #eee;background:#fff;overflow:hidden;flex-shrink:0;">
           {% if seller.logo %}
-            <img
-              src="{{ seller.logo.url }}"
-              alt="{{ seller.name }}"
-              onerror="this.src='{% static 'images/logo.jpg' %}'"
-            >
+            <img src="{{ seller.logo.url }}" alt="{{ seller.name }}" style="width:100%;height:100%;object-fit:contain;padding:10px;">
           {% else %}
-            <img
-              src="{% static 'images/logo.jpg' %}"
-              alt="{{ seller.name }}"
-            >
+            <img src="{% static 'images/logo.jpg' %}" alt="Market Parts" style="width:100%;height:100%;object-fit:contain;padding:10px;">
           {% endif %}
         </div>
 
-        <div class="seller-info">
-
-          <h1 class="seller-name">
-            {{ seller.name }}
-          </h1>
+        <div style="flex:1;min-width:240px;">
+          <h1 style="margin:0 0 8px;">{{ seller.name }}</h1>
 
           {% if seller.city %}
-            <div class="seller-meta">
-              📍 {{ seller.city }}
-            </div>
+            <p>📍 {{ seller.city }}</p>
           {% endif %}
 
-          <div class="seller-meta">
-            📱 {{ seller.phone }}
-          </div>
+          <p>📱 {{ seller.phone }}</p>
 
           {% if seller.instagram %}
-            <div class="seller-meta">
+            <p>
               Instagram:
-              <a
-                href="{{ seller.instagram }}"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href="{{ seller.instagram }}" target="_blank" rel="noopener noreferrer">
                 {{ seller.instagram }}
               </a>
-            </div>
+            </p>
           {% endif %}
 
           {% if seller.website %}
-            <div class="seller-meta">
+            <p>
               Сайт:
-              <a
-                href="{{ seller.website }}"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href="{{ seller.website }}" target="_blank" rel="noopener noreferrer">
                 {{ seller.website }}
               </a>
-            </div>
+            </p>
           {% endif %}
 
           {% if seller.description %}
-            <div class="seller-description">
-              {{ seller.description }}
-            </div>
+            <p style="line-height:1.6;color:#555;">{{ seller.description }}</p>
           {% endif %}
-
-          {% if seller.phone %}
-            <a
-              class="whatsapp-btn"
-              href="https://wa.me/{{ seller.phone }}"
-              target="_blank"
-            >
-              Написать в WhatsApp
-            </a>
-          {% endif %}
-
         </div>
       </div>
+
     </div>
 
-    <div class="products-section">
-
+    <div class="detail-section-card">
       <h2>Товары продавца</h2>
 
       {% if products %}
-
-        <div class="products-grid">
-
+        <div class="products">
           {% for product in products %}
+            <article class="product">
+              <a href="{% url 'product_detail' product.pk %}">
+                {% if product.main_image %}
+                  <img src="{{ product.main_image.url }}" alt="{{ product.title }}">
+                {% else %}
+                  <img src="{% static 'images/product1.jpg' %}" alt="{{ product.title }}">
+                {% endif %}
 
-            <article class="product-card">
+                <div class="product-title">{{ product.title }}</div>
+                <div class="product-price">{{ product.price }} ₸</div>
 
-              <a
-                class="product-link"
-                href="{% url 'product_detail' product.pk %}"
-              >
-
-                <div class="product-image-box">
-
-                  {% if product.main_image %}
-                    <img
-                      src="{{ product.main_image.url }}"
-                      alt="{{ product.title }}"
-                    >
-                  {% else %}
-                    <img
-                      src="{% static 'images/product1.jpg' %}"
-                      alt="{{ product.title }}"
-                    >
-                  {% endif %}
-
+                <div class="product-seller">
+                  {{ product.get_condition_display }}
+                  {% if product.city %} · {{ product.city }}{% endif %}
                 </div>
-
-                <div class="product-content">
-
-                  <div class="product-title">
-                    {{ product.title }}
-                  </div>
-
-                  <div class="product-price">
-                    {{ product.price }} ₸
-                  </div>
-
-                  <div class="product-meta">
-                    {{ product.get_condition_display }}
-
-                    {% if product.city %}
-                      · {{ product.city }}
-                    {% endif %}
-                  </div>
-
-                </div>
-
               </a>
-
             </article>
-
           {% endfor %}
-
         </div>
-
       {% else %}
-
         <p>У продавца пока нет активных товаров.</p>
-
       {% endif %}
-
     </div>
 
-    <div class="back-row">
-      <a
-        href="{% url 'catalog_list' %}"
-        class="btn outline"
-      >
-        Назад в магазин
-      </a>
+    <div class="form-action-row" style="margin-top:20px;">
+      <a href="{% url 'catalog_list' %}" class="btn outline">Назад в магазин</a>
     </div>
 
   </div>
 </section>
-
 {% endblock %}
