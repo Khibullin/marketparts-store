@@ -70,7 +70,7 @@ body{
 
 .hero-grid{
   display:grid;
-  grid-template-columns:1fr 260px;
+  grid-template-columns:1fr 320px;
   gap:18px;
 }
 
@@ -99,15 +99,16 @@ body{
 }
 
 .action-card{
-  background:#fff;
-  border:1px solid #eee;
-  border-radius:16px;
-  padding:12px;
+  background:#fff8f7;
+  border:1px solid #ffd7d2;
+  border-radius:18px;
+  padding:20px;
   text-decoration:none;
   color:#111;
   display:flex;
   justify-content:space-between;
   align-items:center;
+  min-height:120px;
   transition:.2s;
 }
 
@@ -207,7 +208,7 @@ body{
 .products{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:14px;
+  gap:18px;
 }
 
 .product{
@@ -570,6 +571,13 @@ body{
 .product-meta-row{
   display:flex;
   justify-content:space-between;
+  gap:10px;
+  font-size:13px;
+  line-height:1.35;
+  color:#333;
+  margin-bottom:6px;
+}
+
 .seller-info{
   display:flex;
   align-items:center;
@@ -589,18 +597,12 @@ body{
 
 .seller-name{
   font-weight:800;
+  font-size:13px;
   color:#111;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
 }
-  gap:10px;
-  font-size:13px;
-  line-height:1.35;
-  color:#333;
-  margin-bottom:6px;
-}
-
 .product-meta-row span{
   min-width:0;
 }
@@ -689,23 +691,6 @@ body{
       <div class="hero-actions">
 
         <a
-          href="{% url 'catalog_list' %}"
-          class="action-card"
-        >
-          <div>
-            <div class="action-title">
-              Найти запчасть
-            </div>
-
-            <div class="action-sub">
-              по марке, модели или артикулу
-            </div>
-          </div>
-
-          →
-        </a>
-
-        <a
           href="https://zpt.kz/request-parts/"
           class="action-card"
         >
@@ -716,10 +701,11 @@ body{
 
             <div class="action-sub">
               если товара нет в наличии
+              <br>
+              продавцы предложат варианты
             </div>
           </div>
-
-          →
+          
         </a>
 
       </div>
@@ -887,7 +873,7 @@ body{
     font-size:11px;
     color:#17a531;
     font-weight:700;
-    аmargin-bottom:6px;
+    margin-bottom:6px;
   "
 >
   ✓ Проверенный продавец
