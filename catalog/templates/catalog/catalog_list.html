@@ -803,7 +803,7 @@ body{
 
       <article class="product product-v2">
 
-        <a class="product-image-link" href="{% url 'product_detail' product.slug %}" aria-label="Подробнее о товаре {{ product.title }}
+        <a class="product-image-link" href="{% if product.slug %}{% url 'product_detail' product.slug %}{% else %}{% url 'product_detail_old' product.pk %}{% endif %}" aria-label="Подробнее о товаре {{ product.title }}
 
 {% if product.brand %}
   {{ product.brand.name }}
@@ -830,7 +830,7 @@ body{
 
         <div class="product-body">
 
-          <a href="{% url 'product_detail' product.slug %}" class="product-title-link">
+          <a href="{% if product.slug %}{% url 'product_detail' product.slug %}{% else %}{% url 'product_detail_old' product.pk %}{% endif %}" class="product-title-link">
 
 <div class="product-title">
 
@@ -913,7 +913,7 @@ body{
 
             <a
               class="product-detail-link"
-              href="{% url 'product_detail' product.slug %}"
+              href="{% if product.slug %}{% url 'product_detail' product.slug %}{% else %}{% url 'product_detail_old' product.pk %}{% endif %}"
             >
               Подробнее
             </a>
