@@ -586,8 +586,8 @@ body{
 }
 
 .seller-logo{
-  width:32px;
-  height:32px;
+  width:24px;
+  height:24px;
   border-radius:50%;
   object-fit:cover;
   border:1px solid #ececec;
@@ -672,18 +672,7 @@ body{
 </div>
 
 <div class="hero-sub">
-  Новые, б/у и контрактные запчасти от продавцов со всего Казахстана
-</div>
-
-<div
-  style="
-    margin-top:14px;
-    color:#666;
-    font-size:15px;
-    font-weight:600;
-  "
->
-  ZPT Market • WhatsApp связь • Реальные продавцы
+  Новые, б/у и контрактные запчасти, большой выбор запчастей на все марки авто
 </div>
 
       </div>
@@ -838,27 +827,13 @@ body{
 
 <div class="product-meta-row">
 
-  <div class="seller-info">
+<div class="seller-info">
 
-    {% if product.seller.logo %}
-      <img
-        class="seller-logo"
-        src="{{ product.seller.logo.url }}"
-        alt="{{ product.seller_name }}"
-      >
-    {% else %}
-      <img
-        class="seller-logo"
-        src="{% static 'images/logo.png' %}"
-        alt="ZPT"
-      >
-    {% endif %}
+  <span class="seller-name">
+    {{ product.seller_name }} ✓
+  </span>
 
-    <span class="seller-name">
-      {{ product.seller_name }} ✓
-    </span>
-
-  </div>
+</div>
 
   {% if product.city %}
     <span>
