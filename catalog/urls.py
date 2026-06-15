@@ -21,7 +21,9 @@ from .views import (
 
 urlpatterns = [
     path('', catalog_list, name='catalog_list'),
-    path('<int:pk>/', product_detail, name='product_detail'),
+
+    path('<int:pk>/', product_detail, name='product_detail_old'),
+    path('<slug:slug>/', product_detail, name='product_detail'),
 
     path(
         'seller/<int:seller_id>/',

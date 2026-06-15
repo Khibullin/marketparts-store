@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.text import slugify
 
 
 class Country(models.Model):
@@ -71,7 +72,7 @@ class SellerProfile(models.Model):
         related_name='seller_profile',
         verbose_name='Пользователь'
     )
-    name = models.CharField(max_length=255, verbose_name='Название магазина')
+    name = models.CharField(max_length=255, verbose_name='Название маркета')
     phone = models.CharField(max_length=30, verbose_name='Телефон / WhatsApp')
     city = models.CharField(max_length=120, blank=True, default='', verbose_name='Город')
 
@@ -91,14 +92,14 @@ class SellerProfile(models.Model):
     description = models.TextField(
         blank=True,
         default='',
-        verbose_name='Описание магазина'
+        verbose_name='Описание маркета'
     )
 
     logo = models.ImageField(
         upload_to='seller_logos/',
         null=True,
         blank=True,
-        verbose_name='Логотип магазина'
+        verbose_name='Логотип маркета'
     )
 
     class Meta:
@@ -122,14 +123,29 @@ class Product(models.Model):
         ('sold', 'Продан'),
     ]
 
-    title = models.CharField(max_length=255, verbose_name='Название товара')
+    title = models.CharField(
+        max_length=255,
+        verbose_name='Название товара'
+    )
+
+    slug = models.SlugField(
+        max_length=255,
+        unique=False,
+        blank=True,
+        default='',
+        verbose_name='SEO ссылка'
+    )
+
     article = models.CharField(
         max_length=100,
         blank=True,
         default='',
         verbose_name='Артикул'
     )
-    price = models.PositiveIntegerField(verbose_name='Цена')
+
+    price = models.PositiveIntegerField(
+        verbose_name='Цена'
+    )
 
     condition = models.CharField(
         max_length=10,
@@ -186,9 +202,22 @@ class Product(models.Model):
         verbose_name='Категория'
     )
 
-    seller_name = models.CharField(max_length=255, verbose_name='Продавец')
-    whatsapp_number = models.CharField(max_length=30, verbose_name='WhatsApp')
-    city = models.CharField(max_length=120, blank=True, default='', verbose_name='Город')
+    seller_name = models.CharField(
+        max_length=255,
+        verbose_name='Продавец'
+    )
+
+    whatsapp_number = models.CharField(
+        max_length=30,
+        verbose_name='WhatsApp'
+    )
+
+    city = models.CharField(
+        max_length=120,
+        blank=True,
+        default='',
+        verbose_name='Город'
+    )
 
     main_image = models.ImageField(
         upload_to='products/',
@@ -197,11 +226,25 @@ class Product(models.Model):
         verbose_name='Главное фото'
     )
 
-    compatibility = models.TextField(blank=True, verbose_name='Совместимость')
-    description = models.TextField(blank=True, verbose_name='Описание')
+    compatibility = models.TextField(
+        blank=True,
+        verbose_name='Совместимость'
+    )
 
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
-    updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
+    description = models.TextField(
+        blank=True,
+        verbose_name='Описание'
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Создано'
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True,
+        verbose_name='Обновлено'
+    )
 
     class Meta:
         verbose_name = 'Товар'
@@ -213,6 +256,40 @@ class Product(models.Model):
             return f'{self.title} ({self.article})'
         return self.title
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            parts = [self.title]
+
+            if self.brand:
+                parts.append(self.brand.name)
+
+            if self.car_model:
+                parts.append(self.car_model.name)
+
+            base_slug = slugify(
+                '-'.join(parts),
+                allow_unicode=False
+            )
+
+            if not base_slug:
+                base_slug = 'product'
+
+            slug = base_slug
+            counter = 1
+
+            while Product.objects.filter(
+                slug=slug
+            ).exclude(
+                pk=self.pk
+            ).exists():
+
+                counter += 1
+                slug = f'{base_slug}-{counter}'
+
+            self.slug = slug
+
+        super().save(*args, **kwargs)
+
 
 class ProductImage(models.Model):
     product = models.ForeignKey(
@@ -221,7 +298,11 @@ class ProductImage(models.Model):
         related_name='images',
         verbose_name='Товар'
     )
-    image = models.ImageField(upload_to='products/', verbose_name='Фото')
+
+    image = models.ImageField(
+        upload_to='products/',
+        verbose_name='Фото'
+    )
 
     class Meta:
         verbose_name = 'Фото товара'

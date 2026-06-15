@@ -1,7 +1,16 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{ product.title }} — Market Parts{% endblock %}
+{% block title %}
+{{ product.title }}
+{% if product.brand %}
+  {{ product.brand.name }}
+{% endif %}
+{% if product.car_model %}
+  {{ product.car_model.name }}
+{% endif %}
+— Купить в Казахстане | ZPT Market
+{% endblock %}
 
 {% block content %}
 <header class="topbar">
@@ -16,10 +25,11 @@
         src="{% static 'images/logo.png' %}"
         alt="ZPT.KZ"
         style="
-          height:38px;
-          width:auto;
+          width:110px;
+          height:auto;
           object-fit:contain;
           display:block;
+          margin:auto;
         "
       >
     </a>
@@ -28,33 +38,55 @@
 
 <section class="section">
   <div class="container">
-    <div class="breadcrumbs">
-      <a href="/">Главная</a>
-      <span> / </span>
-      <a href="{% url 'catalog_list' %}">Магазин запчастей</a>
-      <span> / </span>
-      <span>{{ product.title }}</span>
-    </div>
+<div class="breadcrumbs">
+
+  <a href="https://zpt.kz/">
+    ZPT.KZ
+  </a>
+
+  <span> / </span>
+
+  <a href="{% url 'catalog_list' %}">
+    ZPT Market
+  </a>
+
+  <span> / </span>
+
+<span>
+
+  {{ product.title }}
+
+  {% if product.brand %}
+    {{ product.brand.name }}
+  {% endif %}
+
+  {% if product.car_model %}
+    {{ product.car_model.name }}
+  {% endif %}
+
+</span>
+
+</div>
 
     <div class="product-detail">
       <div class="product-gallery">
         <div class="product-main-image">
           {% if product.main_image %}
-            <img src="{{ product.main_image.url }}" alt="{{ product.title }}" id="mainImage">
+            <img src="{{ product.main_image.url }}" alt="{{ product.title }}" id="mainImage" onerror="this.onerror=null;this.src=&quot;{% static 'images/product-placeholder.svg' %}&quot;;">
           {% else %}
-            <img src="{% static 'images/product1.jpg' %}" alt="{{ product.title }}" id="mainImage">
+            <img src="{% static 'images/product-placeholder.svg' %}" alt="{{ product.title }}" id="mainImage" onerror="this.onerror=null;this.src=&quot;{% static 'images/product-placeholder.svg' %}&quot;;">
           {% endif %}
         </div>
 
         <div class="product-thumbs">
           {% if product.main_image %}
-            <img src="{{ product.main_image.url }}" alt="{{ product.title }}" onclick="changeImage(this)">
+            <img src="{{ product.main_image.url }}" alt="{{ product.title }}" onclick="changeImage(this)" onerror="this.onerror=null;this.src=&quot;{% static 'images/product-placeholder.svg' %}&quot;;">
           {% else %}
-            <img src="{% static 'images/product1.jpg' %}" alt="{{ product.title }}" onclick="changeImage(this)">
+            <img src="{% static 'images/product-placeholder.svg' %}" alt="{{ product.title }}" onclick="changeImage(this)" onerror="this.onerror=null;this.src=&quot;{% static 'images/product-placeholder.svg' %}&quot;;">
           {% endif %}
 
           {% for img in product.images.all %}
-            <img src="{{ img.image.url }}" alt="{{ product.title }}" onclick="changeImage(this)">
+            <img src="{{ img.image.url }}" alt="{{ product.title }}" onclick="changeImage(this)" onerror="this.onerror=null;this.src=&quot;{% static 'images/product-placeholder.svg' %}&quot;;">
           {% endfor %}
         </div>
       </div>
@@ -70,13 +102,137 @@
           {% endif %}
         </div>
 
-        <h1 class="product-detail-title">{{ product.title }}</h1>
+<h1 class="product-detail-title">
+
+  {{ product.title }}
+
+  {% if product.brand %}
+    {{ product.brand.name }}
+  {% endif %}
+
+  {% if product.car_model %}
+    {{ product.car_model.name }}
+  {% endif %}
+
+</h1>
+
+<div
+  style="
+    color:#666;
+    font-size:15px;
+    margin-top:8px;
+    margin-bottom:18px;
+    line-height:1.5;
+  "
+>
+  Новые, б/у и контрактные запчасти
+</div>
 
         <div class="detail-price">{{ product.price }} ₸</div>
+
+<div
+  style="
+    color:#16a34a;
+    font-weight:700;
+    margin-top:8px;
+    margin-bottom:6px;
+    font-size:14px;
+  "
+>
+  ✓ В наличии у продавца
+</div>
+
+<div
+  style="
+    color:#666;
+    font-size:13px;
+    margin-bottom:16px;
+  "
+>
+  Без посредников • Напрямую продавцу
+</div>
 
         {% if product.article %}
           <div class="detail-article">Артикул: {{ product.article }}</div>
         {% endif %}
+
+        <div class="seller-trust-card">
+          <div class="seller-trust-logo">
+            {% if seller and seller.logo %}
+              <img
+                src="{{ seller.logo.url }}"
+                alt="{{ seller.name }}"
+                onerror="this.onerror=null;this.src=&quot;{% static 'images/logo.png' %}&quot;;"
+              >
+            {% else %}
+              <img
+                src="{% static 'images/logo.png' %}"
+                alt="ZPT Market"
+                style="
+                  width:70px;
+                  height:auto;
+                  object-fit:contain;
+                  opacity:.9;
+                  display:block;
+                  margin:auto;
+                "
+              >
+            {% endif %}
+          </div>
+
+          <div class="seller-trust-info">
+            <div class="seller-trust-name">
+              {% if seller %}
+                {{ seller.name }} ✓
+              {% else %}
+                {{ product.seller_name }} ✓
+              {% endif %}
+            </div>
+
+            <div class="seller-trust-badge">⭐ Проверенный продавец ZPT</div>
+
+<div
+  style="
+    margin-top:6px;
+    font-size:13px;
+    color:#666;
+    font-weight:600;
+  "
+>
+  Реальный продавец автозапчастей
+</div>
+
+            {% if product.city %}
+              <div class="seller-trust-city">{{ product.city }}</div>
+            {% endif %}
+
+            {% if seller %}
+              <div class="seller-trust-links">
+                <a href="{% url 'public_seller_profile' seller.id %}">Все товары продавца</a>
+
+                {% if seller.instagram %}
+                  <a
+                    href="{{ seller.instagram }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Instagram
+                  </a>
+                {% endif %}
+
+                {% if seller.website %}
+                  <a
+                    href="{{ seller.website }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Сайт
+                  </a>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+        </div>
 
         <div class="detail-grid">
           {% if product.brand %}
@@ -116,14 +272,29 @@
           </div>
         </div>
 
-        <a
-          class="btn-green detail-wa-btn"
-          href="https://wa.me/{{ product.whatsapp_number }}?text=Здравствуйте!%20Интересует%20товар:%20{{ product.title|urlencode }}{% if product.article %}.%20Артикул:%20{{ product.article|urlencode }}{% endif %}"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Написать в WhatsApp
-        </a>
+<a
+  class="btn-green detail-wa-btn"
+  href="https://wa.me/{{ product.whatsapp_number|cut:'+'|cut:' ' }}"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  WhatsApp продавцу
+</a>
+
+        <div class="product-request-box">
+<div class="product-request-title">
+  Нет в наличии или нужна другая запчасть?
+</div>
+          <div class="product-request-text">Оставьте заявку — продавцы сами предложат варианты.</div>
+          <a
+            class="btn red product-request-btn"
+            href="{{ product.request_parts_url }}"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Оставить заявку
+          </a>
+        </div>
       </div>
     </div>
 
@@ -159,13 +330,14 @@
               >
             {% else %}
               <img
-                src="{% static 'images/logo.jpg' %}"
-                alt="Logo"
+                src="{% static 'images/logo.png' %}"
+                alt="ZPT.KZ"
                 style="
-                  width:100%;
-                  height:100%;
+                  width:70px;
+                  height:auto;
                   object-fit:contain;
-                  padding:10px;
+                  display:block;
+                  margin:auto;
                 "
               >
             {% endif %}
@@ -302,14 +474,24 @@
                   >
                 {% else %}
                   <img
-                    src="{% static 'images/product1.jpg' %}"
+                    src="{% static 'images/product-placeholder.svg' %}"
                     alt="{{ p.title }}"
                   >
                 {% endif %}
 
-                <div class="product-title">
-                  {{ p.title }}
-                </div>
+<div class="product-title">
+
+  {{ p.title }}
+
+  {% if p.brand %}
+    {{ p.brand.name }}
+  {% endif %}
+
+  {% if p.car_model %}
+    {{ p.car_model.name }}
+  {% endif %}
+
+</div>
 
                 <div class="product-price">
                   {{ p.price }} ₸
@@ -344,7 +526,7 @@
       ">
 
         <a
-          href="https://zpt.kz/request-parts/"
+          href="{{ product.request_parts_url }}"
           style="
             background:#ef4438;
             color:#fff;
@@ -376,7 +558,7 @@
             justify-content:center;
           "
         >
-          Назад в магазин
+          Назад в маркет
         </a>
 
       </div>

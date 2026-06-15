@@ -88,12 +88,27 @@ def catalog_list(request):
     return render(request, 'catalog/catalog_list.html', context)
 
 
-def product_detail(request, pk):
-    product = get_object_or_404(
-        Product,
-        pk=pk,
-        status='active'
-    )
+def product_detail(request, slug=None, pk=None):
+
+    if slug:
+        product = get_object_or_404(
+            Product,
+            slug=slug,
+            status='active'
+        )
+
+    else:
+        product = get_object_or_404(
+            Product,
+            pk=pk,
+            status='active'
+        )
+
+        if product.slug:
+            return redirect(
+                'product_detail',
+                slug=product.slug
+            )
 
     seller = None
 
