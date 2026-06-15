@@ -8,7 +8,11 @@ urlpatterns = [
 
     path('', include('core.urls')),
 
+    # Старый адрес оставляем рабочим, чтобы не сломать существующие ссылки.
     path('catalog/', include('catalog.urls')),
+
+    # Новый основной адрес ZPT Market.
+    path('market/', include('catalog.urls')),
 
     re_path(
         r'^media/(?P<path>.*)$',
